@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/pages/Home.js
+src/pages/ListCharacter.js
+src/pages/DetailCharacter.js
+src/assets/css/style.css
+src/assets/images/accent-1.png
+src/assets/images/phone-2.png
+src/assets/images/partners-1.png
+src/assets/images/phone-1.png
+src/components/CharacterCard.js
