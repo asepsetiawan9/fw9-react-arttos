@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import '../assets/css/mystyle.css'
 
 import phone from '../assets/images/phone.png'
 import hp from '../assets/images/hp.png'

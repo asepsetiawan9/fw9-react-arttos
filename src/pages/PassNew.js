@@ -7,9 +7,8 @@ import phonelogin from '../assets/images/phonelogin.png'
 import { FiEye } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import { FiLock } from "react-icons/fi";
-import { FiUser } from "react-icons/fi";
 
-function Signup() {
+function PassNew() {
   const style = { color: "#1A374D", fontSize: "1.5em" }
   return (
     <>
@@ -35,45 +34,38 @@ function Signup() {
         <Col className='d-flex flex-column gap-3 form-login1' md={5}>
             <Link className='secTitle' to={"/login/"}>ART-TOS</Link>
 
-            <h3>Start Accessing Banking Needs
-                With All Devices and All Platforms
-                With 30.000+ Users</h3>
-            <p>Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
+            <h3>Did You Forgot Your Password?
+                Don’t Worry, You Can Reset Your
+                Password In a Minutes.</h3>
+            <p>To reset your password, you must type your e-mail and we will send a link to your email and you will be directed to the reset password screens.</p>
           
           <div className='d-flex flex-column gap-5' >
-            <div class="input-group">
-                <div class="input-group-text">
-                <FiUser style={style} />
+            
+            <div className="input-group mb-3">
+                <div className="input-group-text">
+                <FiLock style={style} /> 
                 </div>
-                <input placeholder="Enter Your Username" type="text" class="form-control" aria-label="Text input with checkbox"/>
-                
+                <input placeholder="Create new password" type="password" className="form-control" aria-label="Text input with checkbox"/>
+                <span className="input-group-text togglePassword" id="">
+                <FiEye style={style} />
+                  </span>
             </div>
-            <div class="input-group">
-                <div class="input-group-text">
-                <FiMail style={style} />
-                </div>
-                <input placeholder="Enter Your Email" type="text" class="form-control" aria-label="Text input with checkbox"/>
-                
-              </div>
 
             <div className="input-group mb-3">
                 <div className="input-group-text">
                 <FiLock style={style} /> 
                 </div>
-                <input placeholder="Enter Your Password" type="password" className="form-control" aria-label="Text input with checkbox"/>
+                <input placeholder="Create new password" type="password" className="form-control" aria-label="Text input with checkbox"/>
                 <span className="input-group-text togglePassword" id="">
                 <FiEye style={style} />
                   </span>
             </div>
             
+            
             <div className="d-grid ">
-                <Link className='btn btn-fw9' to={"/login/"}>Sign Up</Link>
+                <Link className='btn btn-fw9' to={"/login/"}>Reset Password</Link>
             </div>
-            <div className="text-center">
-            Already have an account? Lets  
-                <Link style={{textDecoration:'none',  color: '#406882' }} to={"/login/"}> Login</Link>
-               
-            </div>
+           
           </div>
         </Col>
     </Row>
@@ -81,4 +73,4 @@ function Signup() {
   )
 }
 
-export default Signup
+export default PassNew
