@@ -11,6 +11,9 @@ import CreatePin from './pages/CreatePin';
 import CreatePinSuccess from './pages/CreatePinSuccess';
 import PassForgot from './pages/PassForgot';
 import PassNew from './pages/PassNew';
+import NavbarDash from './components/NavbarDash';
+import Header from './components/Header';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="createpinsuccess" element={<CreatePinSuccess />} />
         <Route path="forgot" element={<PassForgot />} />
         <Route path="passnew" element={<PassNew />} />
+        <Route path="header" element={<Header />} />
+        <Route path="navbardash" element={<NavbarDash />} />
+        <Route path="dashboard" element={<Dashboard />} />
         
         {/* <Route path="details/:id" element={<DetailCharacter />} /> */}
       </Routes>

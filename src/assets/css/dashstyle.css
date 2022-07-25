@@ -1,14 +1,200 @@
 body{
     font-family: 'Nunito Sans', sans-serif;
     background-color: #1A374D;
-    }
-nav{
-    display: flex; 
-    justify-content:space-between; 
-    margin-left: 150px;
-    margin-right: 150px;
-    padding-top: 50px;
-    background-color: #fff;
     
     }
+header{
+
+    margin-top: -50px;
+    margin-right: 15px;
+    padding: 0px;
+    background-color: #B1D0E0;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+.Navbar{
+    color: #1A374D;
+    display: flex; 
+    justify-content:space-between; 
+    padding-top: 50px;
+    background-color: #B1D0E0;
+    
+    }
+.navWrap{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center; 
+    text-align: center; 
+    align-items: center;
+}
+.dashUser{
+    justify-content: center; 
+    text-align:center; 
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.userDashName{
+    font-size: 18px; 
+    color: #1A374D;; 
+    font-weight: bold;
+}
+.home{
+    font-size: 29px; 
+    color:#6379F4; 
+    font-weight: bold; 
+    text-decoration: none;
+}
+.titleapp:hover{
+    font-size: 29px; 
+    color:#1A374D; 
+    font-weight: bold;
+  }
+  .titleapp{
+    padding-left: 100px;
+    font-size: 29px; 
+    color:#1A374D; 
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .notifDropdown{
+    display: flex;
+    flex-direction: column;
+    background-color: #B1D0E0;
+    border-radius: 25px; 
+    justify-content: center; 
+    width: 403px; 
+    padding: 30px;
+  }
+
+  .notifDay{
+    font-size: 17px; 
+    font-weight: bold; 
+    color: #7A7886;
+  }
+  .dropdownIcon{
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    color: #1A374D;
+    border-radius: unset;
+  }
+  .dropdownIcon:hover{
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    color: #1A374D;
+    border-radius: unset;
+  }
+  .dropdownIcon:active{
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    color: #1A374D;
+    border-radius: unset;
+  }
+  .custom_nav_link{
+    align-self: flex-start!important;  
+    text-align: start !important;
+    background: unset;
+  }
+
+  .sideBar{
+    
+    display: flex;
+    flex-direction: column;
+    background: #B1D0E0;
+    border-radius: 25px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: #1A374D;
+  }
+  .sideBarMenu{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .itemMenu{
+    padding: 30px 30px 0px 30px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    justify-content: center;
+  }
+  .mainWraper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+  .mainDashboard{  
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    padding: 40px 30px
+}
+  .mainDashboardImg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    padding-bottom: 30px; 
+    ;
+
+}
+.mainDashTf{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-between;
+}
+.tfDash{
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  color: #fff;
+}
+
+.fw9-btn{
+  box-sizing: border-box; 
+  background: #B5B0ED; 
+  border: 2px solid #FFFFFF;
+  border-radius: 12px; 
+  font-size: 18px; 
+  padding: 10px 36px; 
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+
+  @media (max-width: 768px) { 
+    .navWrap{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between; 
+    }
+
+    .itemMenu{
+        padding: 10px 30px 0px 30px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        justify-content: center;
+      }
+      .mainDashTf .btnTfMain{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 30px;
+        color: #FFFFFF;
+      
+    }
+  }
     

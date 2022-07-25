@@ -30,3 +30,4 @@ src/assets/images/phone-2.png
 src/assets/images/partners-1.png
 src/assets/images/phone-1.png
 src/components/CharacterCard.js
+src/components/navbar.js
