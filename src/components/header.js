@@ -12,7 +12,7 @@ function Header() {
   return (
     <>
     <Navbar className='Navbar'>
-        <Link className='titleapp' to='/home'>ART-TOS</Link>
+        <Link className='titleapp' to='/dashboard'>ART-TOS</Link>
     <div className="navWrap">
         <img style={{height:'60px'}} src={user} alt="user"/> 
         <div className="dashUser">

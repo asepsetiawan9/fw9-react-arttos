@@ -14,6 +14,10 @@ import PassNew from './pages/PassNew';
 import NavbarDash from './components/NavbarDash';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
+import TransHistory from './pages/TransHistory';
+import TransSearch from './pages/TransSearch';
+import TransInput from './pages/TransInput';
+import TransConfirm from './pages/TransConfirm';
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
         <Route path="header" element={<Header />} />
         <Route path="navbardash" element={<NavbarDash />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="transhistory" element={<TransHistory />} />
+        <Route path="transsearch" element={<TransSearch />} />
+        <Route path="transinput" element={<TransInput />} />
+        <Route path="confirm" element={<TransConfirm />} />
         
         {/* <Route path="details/:id" element={<DetailCharacter />} /> */}
       </Routes>

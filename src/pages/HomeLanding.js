@@ -15,10 +15,10 @@ import u3 from '../assets/images/u3.png'
 function HomeLanding() {
   return (
     <>
-      <header > 
+      <section className='landingHeader'> 
         <nav>
             <div className="titleapp">ART-TOS</div>
-            <div className="gap-2 fw9-btn">
+            <div className="gap-2 fw9-btn1">
                 <Link className='login' to={"/login/"}>Login</Link>
                 <Link className='regis' to={"/signup/"}>Sign Up</Link>
             </div>
@@ -27,7 +27,7 @@ function HomeLanding() {
                 <Link className='regis' to={"/signup/"}>Sign Up</Link>
             </div>
         </nav>
-      </header>
+      </section>
       <section>
       <div className="main1">
             <div className="maintry">

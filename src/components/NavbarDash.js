@@ -21,7 +21,7 @@ function NavbarDash() {
             </div>
             <div className="itemMenu">
                 <FiArrowUp/>
-                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/transfer'>Transfer</Link>
+                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/transsearch'>Transfer</Link>
             </div>
             <div className="itemMenu">
                 <FiPlus/>
