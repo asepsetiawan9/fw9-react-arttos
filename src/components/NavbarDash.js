@@ -29,13 +29,13 @@ function NavbarDash() {
             </div>
             <div className="itemMenu">
                 <FiUser/>
-                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/topup'>Profile</Link>
+                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/profile'>Profile</Link>
             </div>
         </div>
 
         <div className="itemMenu" style={{paddingBottom: '30px'}}>
                 <FiLogOut/>
-                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/topup'>Logout</Link>
+                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/login'>Logout</Link>
             
         </div>
     </Col>

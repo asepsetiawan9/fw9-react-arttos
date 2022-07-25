@@ -214,7 +214,9 @@ footer{
   flex-direction: column;
   justify-content: flex-start;
   padding-left: 30px;
-  gap: 5px;
+  gap: 15px;
+  padding-right: 30px;
+  margin-bottom: 20px;
 }
 
 .cardHistory{
@@ -224,13 +226,14 @@ footer{
 }
 
 .cardSearchTrans{
+  padding-right: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   text-decoration: none;
   color: #1A374D;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-border-radius: 10px;
+  border-radius: 10px;
 }
 .inputAmount{
   display: flex;
@@ -261,6 +264,32 @@ border-radius: 10px;
   text-align: center;
 }
 
+.cardProfile{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 20px 30px 1px 20px;
+  justify-content: space-between;
+  margin: 0px 170px;
+  background: #6998AB;
+  border-radius: 10px;
+}
+.fw9BtnChange{
+  margin: 0px 150px;
+}
+.addPhone{
+  padding: 0px 150px;
+}
+.passChange{
+  margin: 0px 180px;
+}
+.react-bs-container-body tr {
+  border-top-style: hidden !important;
+}
+
+.react-bs-container-header tr {
+  border-bottom-style: hidden !important;
+}
   @media (max-width: 768px) { 
     .headerDashboard{
       padding: 0;
@@ -328,6 +357,24 @@ border-radius: 10px;
     footer{
       display: none;
     }
-
+    .fw9BtnChange{
+      margin: 0px!important;
+    }
+    .addPhone{
+      padding: 0!important;
+    }
+    .passChange{
+    margin: 0px;
+    }
+    .cardProfile{
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      padding: 20px 30px 1px 20px;
+      justify-content: space-between;
+      margin: 0px;
+      background: #6998AB;
+      border-radius: 10px;
+    }
   }
     

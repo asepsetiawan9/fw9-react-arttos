@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import phonelogin from '../assets/images/phonelogin.png'
 //icon
 import { FiEye } from "react-icons/fi";
-import { FiMail } from "react-icons/fi";
+
 import { FiLock } from "react-icons/fi";
 
 function PassNew() {

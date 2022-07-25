@@ -64,7 +64,7 @@ function CreatePin() {
             </div>
             
             <div className="d-grid ">
-                <Link className='btn btn-fw9' to={"/createpinsuccess/"}>Confirm</Link>
+                <Link className='btn btn-fw9 fw9BtnChange' to={"/createpinsuccess/"}>Confirm</Link>
             </div>
             
           </div>

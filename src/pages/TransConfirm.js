@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
 import { Row, Col} from 'react-bootstrap'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import {Link} from 'react-router-dom'
 //photo
 import p1 from '../assets/images/p1.png'
 
 function TransConfirm() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
   return (
     <>
     <section className='headerDashboard'>
@@ -63,31 +69,61 @@ function TransConfirm() {
                         <p style={{fontSize:'16px',  fontWeight: 'bold'}}>For buying some socks</p>
                     </div>
                 </div>
-            </div>
-        <div className='btnTransConfirm btn-close' style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
-            <button type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        {/* <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <div className="d-flex flex-column">
-                            <h5 className="modal-title" id="exampleModalLabel" style={{fontWeight: 'bold'}}>Enter PIN to Transfer</h5>
-                            <p> Enter your 6 digits PIN for confirmation to <br/> continue transferring money. </p>
-                        </div>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <div className="modalPinWrap">
-                            <div className="modalPinFormWrap">
-                                <input type="text" className="modalPinForm"/>
-                            </div>
-                        </div>
-                    </div>
+                <div style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
+                    <Button className='btn btn-fw9' style={{padding: '10px 26px'}} onClick={handleShow}>
+                        Confirm
+                    </Button>
                 </div>
-                                               
             </div>
-        </div> */}
+        
+        <Modal show={show} onHide={handleClose} style={{color: '#1A374D'}}>
+            <Modal.Header style={{borderBottom: 'unset'}} closeButton>
+                <Modal.Title>
+                    <div>
+                    <p style={{fontSize: '16px', fontWeight: 'bold'}}>Enter PIN to Transfer</p>
+                    </div>
+                    <div>
+                    <p style={{fontSize: '16px'}}>Enter your 6 digits PIN for confirmation to <br/> continue transferring money. </p>
+                    </div>
+                </Modal.Title>
+                </Modal.Header>
+            <Modal.Body>
+            <div className="pin-input-wrapper ">
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input"/>
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input"/>
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input"/>
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input"/>
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input"/>
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input"/>
+                </div>
+            </div>
+            </Modal.Body>
+            <Modal.Footer style={{borderTop: 'unset'}}>
+                <Link to={'/transfail'} style={{padding: '10px 26px', background: 'red'}}  className='btn btn-fw9' >
+                    Fail
+                </Link>
+                <Link to={'/transsuccess'} style={{padding: '10px 26px'}}  className='btn btn-fw9' >
+                    Save Changes
+                </Link>
+            </Modal.Footer>
+        </Modal>
       
     </div>
 
