@@ -1,18 +1,64 @@
 import React from 'react'
 import '../assets/css/pagestyle.css'
-import {Navbar, Row, Col} from 'react-bootstrap'
+import {Navbar, Row, Col, Form, Button, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import phonelogin from '../assets/images/phonelogin.png'
+import {Formik} from 'formik'
+import * as Yup from 'yup'
 //icon
-import { FiEye } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import { FiLock } from "react-icons/fi";
 
-function Login() {
+const loginSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email address format').required('Required'),
+  password: Yup.string().min(6).required('Required')
+})
+
+const AuthForm = ({errors, handleSubmit, handleChange})=> {
   const style = { color: "#1A374D", fontSize: "1.5em" }
+  console.log(errors)
+  return(
+    <>
+      <Form  noValidate onSubmit={handleSubmit}>
+        <Form.Group className="input-group mb-3">
+          <div className="input-group-text">
+            <FiMail style={style} /> 
+          </div>    
+          <Form.Control name="email" onChange={handleChange} type="email" placeholder="Enter email" isInvalid={!!errors.email} /> 
+          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="input-group mb-3">
+          <div className="input-group-text">
+            <FiLock style={style} /> 
+          </div>    
+          <Form.Control name="password" onChange={handleChange} type="password"  placeholder="Password" isInvalid={!!errors.password} />
+          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+        </Form.Group>
+
+          <div className="text-end" style={{marginTop: '-10px',marginBottom: '10px'}}>
+                <Link style={{textDecoration: 'none', color: '#406882'}}  to={"/forgot/"}>Forgot Password?</Link>
+          </div>
+        
+        <div className="d-grid ">
+            <Link className='btn btn-fw9' to={"/createpin/"}>Login</Link>
+        </div>
+        <div className="text-center" style={{marginTop: '10px'}}>
+                Don't have an account? Let's 
+                <Link style={{textDecoration:'none',  color: '#406882' }} to={"/signup/"}> Sign Up</Link>
+               
+        </div>
+      </Form>
+    </>
+  )
+}
+
+function Login() {
+  
   return (
     <>
-    <Row className='w-100 mh-100'>
+    {/* <Container className="container-fluid"> */}
+    <Row className='mh-100 row-fluid'>
         <Col className='parent' md={7} >
         <Navbar>
               <Link className='navbar-brand titleapp' to='/home'>ART-TOS</Link>
@@ -40,38 +86,18 @@ function Login() {
             <p>Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
           
           <div className='d-flex flex-column gap-5' >
-            <div class="input-group">
-                <div class="input-group-text">
-                <FiMail style={style} />
-                </div>
-                <input placeholder="Enter Your Email" type="text" class="form-control" aria-label="Text input with checkbox"/>
-                
-              </div>
 
-            <div className="input-group mb-3">
-                <div className="input-group-text">
-                <FiLock style={style} /> 
-                </div>
-                <input placeholder="Enter Your Password" type="password" className="form-control" aria-label="Text input with checkbox"/>
-                <span className="input-group-text togglePassword" id="">
-                <FiEye style={style} />
-                  </span>
-            </div>
-            
-            <div className="text-end" style={{marginTop: '-50px'}}>
-                 <Link style={{textDecoration: 'none', color: '#406882'}}  to={"/forgot/"}>Forgot Password?</Link>
-            </div>
-            <div className="d-grid ">
-                <Link className='btn btn-fw9' to={"/createpin/"}>Login</Link>
-            </div>
-            <div className="text-center">
-                Don't have an account? Let's 
-                <Link style={{textDecoration:'none',  color: '#406882' }} to={"/signup/"}> Sign Up</Link>
-               
-            </div>
+          <Formik
+            // onSubmit={onLoginRequest}
+            initialValues={{email: '', password: ''}}
+            validationSchema={loginSchema}>
+            {(props)=><AuthForm {...props} />}
+          </Formik>
+
           </div>
         </Col>
     </Row>
+    {/* </Container> */}
     </>
   )
 }

@@ -33,10 +33,9 @@ function NavbarDash() {
             </div>
         </div>
 
-        <div className="itemMenu" style={{paddingBottom: '30px'}}>
+        <div className="itemMenu d-flex" style={{paddingBottom: '30px', justifyContent: 'flex-start'}}>
                 <FiLogOut/>
                 <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/login'>Logout</Link>
-            
         </div>
     </Col>
 

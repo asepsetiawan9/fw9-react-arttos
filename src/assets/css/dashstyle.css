@@ -113,14 +113,15 @@ header{
     background: #B1D0E0;
     border-radius: 25px;
     justify-content: space-between;
-    align-items: center;
-    text-align: center;
+    align-items: right;
+    text-align: right;
     color: #1A374D;
   }
   .sideBarMenu{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: flex-start;
   }
   .itemMenu{
     padding: 30px 30px 0px 30px;
@@ -203,6 +204,36 @@ footer{
   font-size: 16px; 
   padding: 10px 26px; 
   color: #B1D0E0;
+  text-decoration: none;
+}
+.regis:hover{
+  box-sizing: border-box; 
+  background: #6998AB; 
+  border: 2px solid #1A374D;
+  border-radius: 12px; 
+  font-size: 16px; 
+  padding: 10px 26px; 
+  color: #1A374D;
+  text-decoration: none;
+}
+.login{
+  box-sizing: border-box; 
+  background: #B1D0E0; 
+  border: 2px solid #1A374D;
+  border-radius: 12px; 
+  font-size: 16px; 
+  padding: 10px 26px; 
+  color: #1A374D;
+  text-decoration: none;
+}
+.login:hover{
+  box-sizing: border-box; 
+  background: #6998AB; 
+  border: 2px solid #1A374D;
+  border-radius: 12px; 
+  font-size: 16px; 
+  padding: 10px 26px; 
+  color: #1A374D;
   text-decoration: none;
 }
 .transHisWrapp{

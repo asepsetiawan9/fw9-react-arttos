@@ -62,9 +62,10 @@ function CreatePin() {
                     <input type="text" className="pin-form-input"/>
                 </div>
             </div>
-            
-            <div className="d-grid ">
-                <Link className='btn btn-fw9 fw9BtnChange' to={"/createpinsuccess/"}>Confirm</Link>
+            <div className='wraper-pin' >
+                <div className="d-grid ">
+                    <Link className='btn btn-fw9' to={"/createpinsuccess/"}>Confirm</Link>
+                </div>
             </div>
             
           </div>

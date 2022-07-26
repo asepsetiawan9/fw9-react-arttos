@@ -77,6 +77,14 @@ header{
          border-color: 6px solid #1A374D; 
        
       }
+      .btn-fw9:hover{
+        background-color: #6998AB; 
+        color: #1A374D; 
+        border-radius: 12px; 
+        padding: 8px 0px; 
+         border-color: 6px solid #1A374D; 
+       
+      }
       .wraper-pin{
         display: flex;
         flex-direction: column;

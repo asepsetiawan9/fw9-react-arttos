@@ -11,8 +11,7 @@ import { FiArrowUp } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 //photo
 import p1 from '../assets/images/p1.png'
-import p2 from '../assets/images/p2.png'
-import p3 from '../assets/images/p3.png'
+
 
 function Dashboard() {
   return (
@@ -34,7 +33,7 @@ function Dashboard() {
                         </div>
                         
                         <div className="btnTfMain" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems:'center', gap: '20px', padding: '30px',color: '#FFFFFF'}}>
-                          <div> <Link className='regis' to={"/transfer/"}><FiPlus />Transfer</Link></div>
+                          <div> <Link className='regis' to={"/transsearch/"}><FiPlus />Transfer</Link></div>
                           <div> <Link className='regis' to={"/topup/"}><FiArrowUp/> Top Up</Link></div>
                            
                         </div>                    

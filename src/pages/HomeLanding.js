@@ -18,7 +18,7 @@ function HomeLanding() {
       <section className='landingHeader'> 
         <nav>
             <div className="titleapp">ART-TOS</div>
-            <div className="gap-2 fw9-btn1">
+            <div className="d-flex gap-2">
                 <Link className='login' to={"/login/"}>Login</Link>
                 <Link className='regis' to={"/signup/"}>Sign Up</Link>
             </div>
@@ -135,7 +135,7 @@ function HomeLanding() {
         <footer>
             <h1>ART-TOS</h1>
             <p>Simplify financial needs and saving <br/> much time in banking needs with <br/> one single app.</p>
-            <hr style={{borderTop: '3px solid white'}}/>
+            <hr style={{borderTop: '3px solid #1A374D'}}/>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <div>
                 <p>2020 Zwallet. All right reserved.</p>

@@ -31,7 +31,7 @@ function CreatePinSuccess() {
 
         <Col className='d-flex flex-column gap-3 form-login1' md={5}>
             <Link className='secTitle' to={"/login/"}>ART-TOS</Link>
-            <img style={{height: '50px', width: '50px'}} src={success} alt='success'/>
+            <img style={{ height: '50px', width: '50px'}} src={success} alt='success'/>
             <h3>Your PIN Was Successfully Created</h3>
             <p>Your PIN was successfully created and you can now access all the features in Zwallet. Login to your new account and start exploring!</p>
           
