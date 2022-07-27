@@ -7,7 +7,7 @@ import phonelogin from '../assets/images/phonelogin.png'
 function CreatePin() {
   return (
     <>
-    <Row className='w-100 mh-100'>
+    <Row className='mh-100'>
         <Col className='parent' md={7} >
         <Navbar>
               <Link className='navbar-brand titleapp' to='/home'>ART-TOS</Link>

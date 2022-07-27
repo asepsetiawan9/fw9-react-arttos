@@ -19,7 +19,7 @@ const AuthForm = ({errors, handleSubmit, handleChange})=> {
   console.log(errors)
   return(
     <>
-      <Form  noValidate onSubmit={handleSubmit}>
+      <Form className='d-flex flex-column gap-2' noValidate onSubmit={handleSubmit}>
         <Form.Group className="input-group mb-3">
           <div className="input-group-text">
             <FiMail style={style} /> 
@@ -58,7 +58,7 @@ function Login() {
   return (
     <>
     {/* <Container className="container-fluid"> */}
-    <Row className='mh-100 row-fluid'>
+    <Row className='mh-100 '>
         <Col className='parent' md={7} >
         <Navbar>
               <Link className='navbar-brand titleapp' to='/home'>ART-TOS</Link>
@@ -97,7 +97,6 @@ function Login() {
           </div>
         </Col>
     </Row>
-    {/* </Container> */}
     </>
   )
 }

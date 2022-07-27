@@ -66,7 +66,7 @@ function Dashboard() {
                             </div>
 
                             <div>
-                                <a style={{fontSize: '14px', textDecoration: 'none'}} href="/transhistory">See all</a>
+                                <Link style={{fontSize: '14px', textDecoration: 'none', color: '#1A374D'}} to={"/transhistory"}>See all</Link>
                             </div>
                         </div>
                         <div className="d-flex flex-row" style={{justifyContent: 'space-between'}}>

@@ -1,6 +1,8 @@
 import React from 'react'
 import '../assets/css/pagestyle.css'
-import {Navbar, Row, Col} from 'react-bootstrap'
+import {Navbar, Row, Col, Form} from 'react-bootstrap'
+import {Formik} from 'formik'
+import * as Yup from 'yup'
 import {Link} from 'react-router-dom'
 import phonelogin from '../assets/images/phonelogin.png'
 //icon
@@ -8,11 +10,35 @@ import phonelogin from '../assets/images/phonelogin.png'
 import { FiMail } from "react-icons/fi";
 
 
-function PassForgot() {
+const forgotPassSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email address format').required('Required')
+})
+
+const EmailForm = ({errors, handleSubmit, handleChange})=> {
   const style = { color: "#1A374D", fontSize: "1.5em" }
+  console.log(errors)
+  return(
+    <>
+      <Form  noValidate onSubmit={handleSubmit}>
+        <Form.Group className="input-group mb-3">
+          <div className="input-group-text">
+            <FiMail style={style} /> 
+          </div>    
+          <Form.Control name="email" onChange={handleChange} type="email" placeholder="Enter email" isInvalid={!!errors.email} /> 
+          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+        </Form.Group>
+
+        <div className="d-grid ">
+            <Link className='btn btn-fw9' to={"/passnew/"}>Reset Password</Link>
+        </div>
+      </Form>
+    </>
+  )
+}
+function PassForgot() {
   return (
     <>
-    <Row className='w-100 mh-100'>
+    <Row className='mh-100'>
         <Col className='parent' md={7} >
         <Navbar>
               <Link className='navbar-brand titleapp' to='/home'>ART-TOS</Link>
@@ -40,18 +66,12 @@ function PassForgot() {
             <p>To reset your password, you must type your e-mail and we will send a link to your email and you will be directed to the reset password screens.</p>
           
           <div className='d-flex flex-column gap-5' >
-            <div class="input-group">
-                <div class="input-group-text">
-                <FiMail style={style} />
-                </div>
-                <input placeholder="Enter Your Email" type="text" class="form-control" aria-label="Text input with checkbox"/>
-                
-            </div>
-
-           
-            <div className="d-grid ">
-                <Link className='btn btn-fw9' to={"/passnew/"}>Reset Password</Link>
-            </div>
+          <Formik
+            // onSubmit={onLoginRequest}
+            initialValues={{email: '', password: ''}}
+            validationSchema={forgotPassSchema}>
+            {(props)=><EmailForm {...props} />}
+          </Formik>
             
           </div>
         </Col>

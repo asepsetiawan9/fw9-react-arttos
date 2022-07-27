@@ -132,10 +132,8 @@ header{
       }
       
       .form-login1{
-        padding: 35px;
+        padding: 35px 35px 110px 35px;
         text-align: center;
-        width: 100%; 
-        height: calc(100%)
         
       }
       .form-login1 h3{
