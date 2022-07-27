@@ -2,10 +2,50 @@ import React from 'react'
 import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
-import { Row, Col} from 'react-bootstrap'
+import { Row, Col, Form } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import {Formik} from 'formik'
+import * as Yup from 'yup'
 //photo
 import p1 from '../assets/images/p1.png'
+
+const amountSchema = Yup.object().shape({
+  amount: Yup.number().positive("Must be more than 0")
+  .integer("Must be more than 0")
+  .required("This field is required")
+  .max(10000000, 'Max Amount is 10.000.000')
+})
+
+const AmountForm = ({errors, handleSubmit, handleChange})=> {
+
+  console.log(errors)
+  return(
+    <>
+        <Form  noValidate onSubmit={handleSubmit}>
+          <div className="inputAmount">
+            <div>
+              <Form.Control className="form-control wrap-amount text-center" style={{borderBottom:'none', fontSize: '42px', color:'#1A374D', paddingTop: '40px', fontWeight: '900'}} name="amount" onChange={handleChange} type="number" placeholder="0.00" isInvalid={!!errors.amount} /> 
+                <Form.Control.Feedback className="wrap-amount text-center" type="invalid">{errors.amount}</Form.Control.Feedback>
+                
+            </div>
+
+            <div>
+                <p style={{fontSize: '16px', color:'#1A374D', fontWeight: '700'}}>Rp120.000 Available</p>
+            </div>
+            <div className="input-group" style={{paddingLeft: '150px', paddingRight:'150px'}}>
+                <div className="input-group-text"><i data-feather="edit-2"></i>
+                </div>
+                <input type="text" className="form-control" placeholder="Add some notes" />
+            </div>
+            
+          </div>
+          <div style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
+              <Link  className='regis' to={"/confirm/"}>continue</Link>
+          </div>
+        </Form>
+    </>
+  )
+}
 
 function TransSearch() {
   return (
@@ -45,24 +85,13 @@ function TransSearch() {
                 press continue to the next steps.</p>
         </div>
 
-        <div className="inputAmount">
-            <div>
-                <input style={{borderBottom:'none', fontSize: '42px', color:'#1A374D', paddingTop: '40px', fontWeight: '900'}} type="number" className="form-control wrap-amount text-center" placeholder="0.00"></input>
-            </div>
-
-            <div>
-                <p style={{fontSize: '16px', color:'#1A374D', fontWeight: '700'}}>Rp120.000 Available</p>
-            </div>
-            <div className="input-group" style={{paddingLeft: '150px', paddingRight:'150px'}}>
-                <div className="input-group-text"><i data-feather="edit-2"></i>
-                </div>
-                <input type="text" className="form-control" placeholder="Add some notes" />
-            </div>
-            
-        </div>
-        <div style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
-            <Link  className='regis' to={"/confirm/"}>continue</Link>
-        </div>
+        <Formik
+            // onSubmit={onLoginRequest}
+            initialValues={{amount: ''}}
+            validationSchema={amountSchema}>
+            {(props)=><AmountForm {...props} />}
+          </Formik>
+      
       
     </div>
 

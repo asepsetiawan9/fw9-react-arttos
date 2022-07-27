@@ -1,7 +1,7 @@
 import React from 'react'
 import '../assets/css/pagestyle.css'
-import {Navbar, Row, Col, Form, Button, Container} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Alert, Navbar, Row, Col, Form, Button, Container} from 'react-bootstrap'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import phonelogin from '../assets/images/phonelogin.png'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
@@ -15,10 +15,20 @@ const loginSchema = Yup.object().shape({
 })
 
 const AuthForm = ({errors, handleSubmit, handleChange})=> {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const onLogin = () => {
+    localStorage.setItem("auth", "randomToken");
+    navigate("/createpin");
+  };
   const style = { color: "#1A374D", fontSize: "1.5em" }
   console.log(errors)
   return(
     <>
+            {location.state?.errorMsg && (
+              <Alert variant="danger">{location.state.errorMsg}</Alert>
+            )}
       <Form className='d-flex flex-column gap-2' noValidate onSubmit={handleSubmit}>
         <Form.Group className="input-group mb-3">
           <div className="input-group-text">
@@ -41,7 +51,7 @@ const AuthForm = ({errors, handleSubmit, handleChange})=> {
           </div>
         
         <div className="d-grid ">
-            <Link className='btn btn-fw9' to={"/createpin/"}>Login</Link>
+            <Button onClick={onLogin} className='btn btn-fw9'>Login</Button>
         </div>
         <div className="text-center" style={{marginTop: '10px'}}>
                 Don't have an account? Let's 
@@ -54,7 +64,8 @@ const AuthForm = ({errors, handleSubmit, handleChange})=> {
 }
 
 function Login() {
-  
+
+
   return (
     <>
     {/* <Container className="container-fluid"> */}
@@ -78,6 +89,7 @@ function Login() {
         </Col>
 
         <Col className='d-flex flex-column gap-3 form-login1' md={5}>
+           
             <Link className='secTitle' to={"/login/"}>ART-TOS</Link>
 
             <h3>Start Accessing Banking Needs

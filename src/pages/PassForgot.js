@@ -68,7 +68,7 @@ function PassForgot() {
           <div className='d-flex flex-column gap-5' >
           <Formik
             // onSubmit={onLoginRequest}
-            initialValues={{email: '', password: ''}}
+            initialValues={{email: ''}}
             validationSchema={forgotPassSchema}>
             {(props)=><EmailForm {...props} />}
           </Formik>

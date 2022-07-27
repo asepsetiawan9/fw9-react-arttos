@@ -1,7 +1,7 @@
 import React from 'react'
 import '../assets/css/dashstyle.css'
-import {Link} from 'react-router-dom'
-import {Col} from 'react-bootstrap'
+import {Link, useNavigate, useLocation} from 'react-router-dom'
+import {Button, Col} from 'react-bootstrap'
 
 //icon
 import { FiGrid } from "react-icons/fi";
@@ -12,6 +12,12 @@ import { FiLogOut } from "react-icons/fi";
 
 
 function NavbarDash() {
+    // const location = useLocation();
+    const navigate = useNavigate();
+    const onLogout = () => {
+      localStorage.removeItem("auth");
+      navigate("/login");
+    };
   return (
     <>
     <Col md={3} className='sideBar'>
@@ -36,7 +42,7 @@ function NavbarDash() {
 
         <div className="itemMenu d-flex" style={{paddingBottom: '30px', justifyContent: 'flex-start'}}>
                 <FiLogOut/>
-                <Link style={{textDecoration: 'none', color: '#3A3D42CC'}} to='/login'>Logout</Link>
+                <Button style={{textDecoration: 'none', color: '#3A3D42CC', background: 'none', border: 'none'}} onClick={onLogout}>Logout</Button>
         </div>
         
     </Col>

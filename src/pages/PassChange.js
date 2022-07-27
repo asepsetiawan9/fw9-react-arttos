@@ -2,14 +2,71 @@ import React from 'react'
 import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
-import { Row, Col} from 'react-bootstrap'
+import { Row, Col, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import {Formik} from 'formik'
+import * as Yup from 'yup'
+
 import { FiEye } from "react-icons/fi";
 import { FiLock } from "react-icons/fi";
 
+const passNewSchema = Yup.object().shape({
+    currentpassword: Yup.string().min(6).required('Password is required'),
+    password: Yup.string().min(6).required('Password is required'),
+    passwordConfirmation: Yup.string().min(6)
+       .oneOf([Yup.ref('password'), null], 'Passwords must match')
+  })
+  
+  const PassNewForm = ({errors, handleSubmit, handleChange})=> {
+    const style = { color: "#1A374D", fontSize: "1.5em" }
+    console.log(errors)
+    return(
+      <>
+        <Form className='d-flex flex-column gap-3' noValidate onSubmit={handleSubmit}>
+  
+        <Form.Group className="input-group mb-3">
+            <div className="input-group-text">
+              <FiLock style={style} /> 
+            </div>    
+            <Form.Control name="currentpassword" onChange={handleChange} type="password"  placeholder="Current Password" isInvalid={!!errors.currentpassword} />
+            <div className="input-group-text">
+            <FiEye style={style} />
+            </div>
+            <Form.Control.Feedback type="invalid">{errors.currentpassword}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="input-group mb-3">
+            <div className="input-group-text">
+              <FiLock style={style} /> 
+            </div>    
+            <Form.Control name="password" onChange={handleChange} type="password"  placeholder="New Password" isInvalid={!!errors.password} />
+            <div className="input-group-text">
+            <FiEye style={style} />
+            </div>
+            <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+          </Form.Group>
+  
+          <Form.Group className="input-group mb-3">
+            <div className="input-group-text">
+              <FiLock style={style} /> 
+            </div>    
+            <Form.Control name="passwordConfirmation" onChange={handleChange} type="password"  placeholder="Repeat New Password" isInvalid={!!errors.passwordConfirmation} />
+            <div className="input-group-text">
+            <FiEye style={style} />
+            </div>
+            <Form.Control.Feedback type="invalid">{errors.passwordConfirmation}</Form.Control.Feedback>
+          </Form.Group>
+          
+          <div className="d-grid ">
+              <Link className='btn btn-fw9' to={"/profile/"}>Change Password</Link>
+          </div>
+        </Form>
+      </>
+    )
+  }
+  
 
 function PassChange() {
-    const style = { color: "#1A374D", fontSize: "1.5em" }
+    
   return (
     <>
     <section className='headerDashboard'>
@@ -32,39 +89,12 @@ function PassChange() {
                 </div>
 
                 <div className='d-flex flex-column gap-4 passChange'>
-                    <div className="input-group mb-3">
-                        <div className="input-group-text">
-                            <FiLock style={style} /> 
-                        </div>
-                            <input placeholder="Current password" type="password" className="form-control" aria-label="Text input with checkbox"/>
-                            <span className="input-group-text togglePassword" id="">
-                            <FiEye style={style} />
-                            </span>
-                    </div>
-
-                    <div className="input-group mb-3">
-                        <div className="input-group-text">
-                            <FiLock style={style} /> 
-                        </div>
-                            <input placeholder="new password" type="password" className="form-control" aria-label="Text input with checkbox"/>
-                            <span className="input-group-text togglePassword" id="">
-                            <FiEye style={style} />
-                        </span>
-                    </div>
-
-                    <div className="input-group mb-3">
-                        <div className="input-group-text">
-                            <FiLock style={style} /> 
-                        </div>
-                            <input placeholder="Repeat new password" type="password" className="form-control" aria-label="Text input with checkbox"/>
-                            <span className="input-group-text togglePassword" id="">
-                            <FiEye style={style} />
-                        </span>
-                    </div>
-
-                    <div className="d-grid " >
-                        <Link className='btn btn-fw9'  to={"/profile/"}>Change Password</Link>
-                    </div>
+                <Formik
+                    // onSubmit={onLoginRequest}
+                    initialValues={{currentpassword: '', password: '', passwordConfirmation: ''}}
+                    validationSchema={passNewSchema}>
+                    {(props)=><PassNewForm {...props} />}
+                </Formik>
                 </div>
             </div>
       

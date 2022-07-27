@@ -27,35 +27,67 @@ import PhoneAdd from './pages/PhoneAdd';
 import PhoneManage from './pages/PhoneManage';
 import TransSuccess from './pages/TransSuccess';
 import TransFail from './pages/TransFail';
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+    {/* <Route path="header" element={<Header />} />
+        <Route path="navbardash" element={<NavbarDash />} /> */}
         <Route path="tes" element={<Home />} />
         <Route path="/" element={<HomeLanding />} />
         <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="createpin" element={<CreatePin />} />
-        <Route path="createpinsuccess" element={<CreatePinSuccess />} />
+        <Route path="signup" element={<Signup />} /> 
         <Route path="forgot" element={<PassForgot />} />
         <Route path="passnew" element={<PassNew />} />
-        <Route path="header" element={<Header />} />
-        <Route path="navbardash" element={<NavbarDash />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="transhistory" element={<TransHistory />} />
-        <Route path="transsearch" element={<TransSearch />} />
-        <Route path="transinput" element={<TransInput />} />
-        <Route path="confirm" element={<TransConfirm />} />
-        <Route path="topup" element={<Topup />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="personalinfo" element={<PersonalInfo />} />
-        <Route path="passchange" element={<PassChange />} />
-        <Route path="pinchange" element={<PinChange />} />
-        <Route path="phoneadd" element={<PhoneAdd />} />
-        <Route path="phonemanage" element={<PhoneManage />} />
-        <Route path="transsuccess" element={<TransSuccess />} />
-        <Route path="transfail" element={<TransFail />} />
+
+        <Route path="createpin" 
+               element={<PrivateRoute><CreatePin /></PrivateRoute>} />
+        <Route path="createpinsuccess" 
+               element={<PrivateRoute><CreatePinSuccess /></PrivateRoute>} />
+        <Route path="dashboard" 
+               element={
+                <PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="transhistory" 
+               element={
+                <PrivateRoute><TransHistory /></PrivateRoute>} />
+        <Route path="transsearch" 
+               element={
+                <PrivateRoute><TransSearch /></PrivateRoute>} />
+        <Route path="transinput" 
+               element={
+                <PrivateRoute><TransInput /></PrivateRoute>} />
+        <Route path="confirm" 
+               element={
+                <PrivateRoute><TransConfirm /></PrivateRoute>} />
+        <Route path="topup" 
+               element={
+                <PrivateRoute><Topup /></PrivateRoute>} />
+        <Route path="profile" 
+               element={
+                <PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="personalinfo" 
+               element={
+                <PrivateRoute><PersonalInfo /></PrivateRoute>} />
+        <Route path="passchange" 
+               element={
+                <PrivateRoute><PassChange /></PrivateRoute>} />
+        <Route path="pinchange" 
+               element={
+                <PrivateRoute><PinChange /></PrivateRoute>} />
+        <Route path="phoneadd" 
+               element={
+                <PrivateRoute><PhoneAdd /></PrivateRoute>} />
+        <Route path="phonemanage" 
+               element={
+                <PrivateRoute><PhoneManage /></PrivateRoute>} />
+        <Route path="transsuccess" 
+               element={
+                <PrivateRoute><TransSuccess /></PrivateRoute>} />
+        <Route path="transfail" 
+               element={
+                <PrivateRoute><TransFail /></PrivateRoute>} />
         
         {/* <Route path="details/:id" element={<DetailCharacter />} /> */}
       </Routes>

@@ -6,10 +6,7 @@ import phonelogin from '../assets/images/phonelogin.png'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
 //icon
-import { FiEye } from "react-icons/fi";
-
-import { FiLock } from "react-icons/fi";
-
+import { FiEye, FiLock } from "react-icons/fi";
 
 const passNewSchema = Yup.object().shape({
   password: Yup.string().min(6).required('Password is required'),
