@@ -8,6 +8,8 @@ import Modal from 'react-bootstrap/Modal';
 import {Link} from 'react-router-dom'
 //photo
 import p1 from '../assets/images/p1.png'
+import { FiThermometer } from 'react-icons/fi'
+import Footer from '../components/Footer'
 
 function TransConfirm() {
     const [show, setShow] = useState(false);
@@ -134,12 +136,10 @@ function TransConfirm() {
     </section>
            
     <footer >
-        <div className="d-flex flex-row footerDekstop" style={{justifyContent: 'space-between'}}>
-            <div><p>2022 Art-Tos. All right reserved.</p></div>
-            <div><p>+62 5637 8882 9901 &nbsp;&nbsp;&nbsp;&nbsp;contact@art-Tos.com</p></div>
-        </div>
+        <>
+        <Footer/>
+        </>
     </footer>
-
     </>
   )
 }

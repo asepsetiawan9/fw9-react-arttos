@@ -31,11 +31,9 @@ const AuthForm = ({errors, handleSubmit, handleChange})=> {
             )}
       <Form className='d-flex flex-column gap-2' noValidate onSubmit={handleSubmit}>
         <Form.Group className="input-group mb-3">
-          <div className="input-group-text">
-            <FiMail style={style} /> 
-          </div>    
-          <Form.Control name="email" onChange={handleChange} type="email" placeholder="Enter email" isInvalid={!!errors.email} /> 
-          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+          <div className="input-group-text"><FiMail style={style} /> </div> {/* icon */}   
+          <Form.Control name="email" onChange={handleChange} type="email" placeholder="Enter email" isInvalid={!!errors.email} />  {/* form input */}
+          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback> {/* form validasi */}
         </Form.Group>
 
         <Form.Group className="input-group mb-3">
