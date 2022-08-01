@@ -28,6 +28,7 @@ import PhoneManage from './pages/PhoneManage';
 import TransSuccess from './pages/TransSuccess';
 import TransFail from './pages/TransFail';
 import PrivateRoute from "./components/PrivateRoute";
+import TesRedux from './pages/TesRedux';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="signup" element={<Signup />} /> 
         <Route path="forgot" element={<PassForgot />} />
         <Route path="passnew" element={<PassNew />} />
+        <Route path="tesredux" element={<TesRedux />} />
 
         <Route path="createpin" 
                element={<PrivateRoute><CreatePin /></PrivateRoute>} />
