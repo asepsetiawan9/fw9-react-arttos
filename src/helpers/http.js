@@ -1,9 +1,15 @@
 import axios from 'axios'
 
-const http = () => {
+const UrlBackEnd = process.env.REACT_APP_BACKEND_URL
+const http = (token) => {
+    const headers = {};
+    if (token){
+        headers.authorization = `Bearer ${token}`; 
+    }
     return axios.create({
-        baseURL: 'https://rickandmortyapi.com/api'
-    })
+        headers,
+        baseURL: UrlBackEnd
+    });
 }
 
-export default http
+export default http;

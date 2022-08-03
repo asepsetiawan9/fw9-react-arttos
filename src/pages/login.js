@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
 import '../assets/css/pagestyle.css'
-import {Alert, Navbar, Row, Col, Form, Button, Container} from 'react-bootstrap'
-import {Link, useLocation, useNavigate} from 'react-router-dom'
-import phonelogin from '../assets/images/phonelogin.png'
-import {Formik} from 'formik'
-import * as Yup from 'yup'
+import {Alert, Navbar, Row, Col, Form, Button} from 'react-bootstrap';
+import {Link, useNavigate} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import phonelogin from '../assets/images/phonelogin.png';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import { login } from "../redux/asyncActions/auth";
 //icon
 import { FiMail } from "react-icons/fi";
 import { FiLock } from "react-icons/fi";
@@ -14,34 +16,45 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().min(6).required('Required')
 })
 
-const AuthForm = ({errors, handleSubmit, handleChange})=> {
-  const location = useLocation();
-  const navigate = useNavigate();
+const LoginForm = (props)=> {
+  const successMsg = useSelector((state) => state.auth.successMsg);
+  const errorMsg = useSelector((state) => state.auth.errorMsg);
 
-  const onLogin = () => {
-    localStorage.setItem("auth", "randomToken");
-    navigate("/createpin");
-  };
   const style = { color: "#1A374D", fontSize: "1.5em" }
-  console.log(errors)
+
   return(
     <>
-            {location.state?.errorMsg && (
-              <Alert variant="danger">{location.state.errorMsg}</Alert>
-            )}
-      <Form className='d-flex flex-column gap-2' noValidate onSubmit={handleSubmit}>
+        
+      <Form className='d-flex flex-column gap-2' 
+      noValidate 
+      onSubmit={props.handleSubmit}>
+       {successMsg && <Alert variant="success">{successMsg}</Alert>}
+          {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
         <Form.Group className="input-group mb-3">
-          <div className="input-group-text"><FiMail style={style} /> </div> {/* icon */}   
-          <Form.Control name="email" onChange={handleChange} type="email" placeholder="Enter email" isInvalid={!!errors.email} />  {/* form input */}
-          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback> {/* form validasi */}
+          <div className="input-group-text"><FiMail style={style} /> </div>    
+          {/* form input */}
+          <Form.Control 
+          name="email" 
+          type="email" 
+          placeholder="Enter email" 
+          onChange={props.handleChange} 
+          value={props.values.email}
+          isInvalid={!!props.errors.email} />  
+          <Form.Control.Feedback type="invalid">{props.errors.email}</Form.Control.Feedback> {/* form validasi */}
         </Form.Group>
 
         <Form.Group className="input-group mb-3">
           <div className="input-group-text">
             <FiLock style={style} /> 
           </div>    
-          <Form.Control name="password" onChange={handleChange} type="password"  placeholder="Password" isInvalid={!!errors.password} />
-          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+          <Form.Control 
+          name="password" 
+          type="password"  
+          placeholder="Password" 
+          value={props.values.password}
+          onChange={props.handleChange} 
+          isInvalid={!!props.errors.password} />
+          <Form.Control.Feedback type="invalid">{props.errors.password}</Form.Control.Feedback>
         </Form.Group>
 
           <div className="text-end" style={{marginTop: '-10px',marginBottom: '10px'}}>
@@ -49,7 +62,7 @@ const AuthForm = ({errors, handleSubmit, handleChange})=> {
           </div>
         
         <div className="d-grid ">
-            <Button onClick={onLogin} className='btn btn-fw9'>Login</Button>
+            <Button type="submit" className='btn btn-fw9'>Login</Button>
         </div>
         <div className="text-center" style={{marginTop: '10px'}}>
                 Don't have an account? Let's 
@@ -61,8 +74,21 @@ const AuthForm = ({errors, handleSubmit, handleChange})=> {
   )
 }
 
-function Login() {
+const Login = () => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
 
+  const onLogin = (value) => {
+    const data = { email: value.email, password: value.password };
+    dispatch(login(data));
+  };
+
+  React.useEffect(()=>{
+    if (token) {
+      navigate('/dashboard')
+    }
+  }, [navigate, token])
 
   return (
     <>
@@ -98,10 +124,11 @@ function Login() {
           <div className='d-flex flex-column gap-5' >
 
           <Formik
-            // onSubmit={onLoginRequest}
+            onSubmit={onLogin}
             initialValues={{email: '', password: ''}}
             validationSchema={loginSchema}>
-            {(props)=><AuthForm {...props} />}
+            
+            {(props)=><LoginForm {...props} />}
           </Formik>
 
           </div>

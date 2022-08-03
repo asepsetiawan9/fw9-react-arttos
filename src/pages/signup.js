@@ -1,8 +1,11 @@
-import React from 'react'
-import '../assets/css/pagestyle.css'
-import {Navbar, Row, Col, Form} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-import phonelogin from '../assets/images/phonelogin.png'
+import React from 'react';
+import '../assets/css/pagestyle.css';
+import {Navbar, Row, Col, Form, Alert, Button} from 'react-bootstrap';
+import { useDispatch, useSelector } from "react-redux";
+import {Link, useNavigate} from 'react-router-dom';
+import phonelogin from '../assets/images/phonelogin.png';
+import { register } from "../redux/asyncActions/auth";
+
 import {Formik} from 'formik'
 import * as Yup from 'yup'
 //icon
@@ -17,36 +20,46 @@ const signupSchema = Yup.object().shape({
   password: Yup.string().min(6).required('Required')
 })
 
-const SignUpForm = ({errors, handleSubmit, handleChange})=> {
+const SignUpForm = (props)=> {
+  const navigate = useNavigate();
+  const successMsg = useSelector((state) => state.auth.successMsg);
+  const errorMsg = useSelector((state) => state.auth.errorMsg);
+
+  React.useEffect(() => {
+    if (successMsg) {
+      navigate("/login", { state: { successMsg } });
+    }
+  }, [navigate, successMsg]);
+
   const style = { color: "#1A374D", fontSize: "1.5em" }
-  console.log(errors)
   return(
     <>
-      <Form className='d-flex flex-column gap-3' noValidate onSubmit={handleSubmit}>
+      <Form className='d-flex flex-column gap-3' noValidate onSubmit={props.handleSubmit}>
+      {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
         <Form.Group className="input-group mb-3">
           <div className="input-group-text">
             <FiUser style={style} /> 
           </div>    
-          <Form.Control name="username" onChange={handleChange} type="text" placeholder="Enter username" isInvalid={!!errors.username} /> 
-          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+          <Form.Control name="username" onChange={props.handleChange} type="text" placeholder="Enter username" value={props.values.username} isInvalid={!!props.errors.username} /> 
+          <Form.Control.Feedback type="invalid">{props.errors.email}</Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="input-group mb-3">
           <div className="input-group-text">
             <FiMail style={style} /> 
           </div>    
-          <Form.Control name="email" onChange={handleChange} type="email" placeholder="Enter email" isInvalid={!!errors.email} /> 
-          <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+          <Form.Control name="email" onChange={props.handleChange} type="email" placeholder="Enter email" value={props.values.email} isInvalid={!!props.errors.email} /> 
+          <Form.Control.Feedback type="invalid">{props.errors.email}</Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="input-group mb-3">
           <div className="input-group-text">
             <FiLock style={style} /> 
           </div>    
-          <Form.Control name="password" onChange={handleChange} type="password"  placeholder="Password" isInvalid={!!errors.password} />
-          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+          <Form.Control name="password" onChange={props.handleChange} type="password"  placeholder="Password" value={props.values.password} isInvalid={!!props.errors.password} />
+          <Form.Control.Feedback type="invalid">{props.errors.password}</Form.Control.Feedback>
         </Form.Group>
         <div className="d-grid ">
-            <Link className='btn btn-fw9' to={"/createpin/"}>Sign Up</Link>
+            <Button className='btn btn-fw9' to={"/createpin/"} type="submit">Sign Up</Button>
         </div>
         <div className="text-center">
             Already have an account? Lets  
@@ -61,6 +74,20 @@ const SignUpForm = ({errors, handleSubmit, handleChange})=> {
 
 function Signup() {
   const style = { color: "#1A374D", fontSize: "1.5em" }
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
+
+  const onRegister = (value) => {
+    dispatch(register(value));
+  };
+
+  React.useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate, token]);
+
   return (
     <>
     <Row className='mh-100'>
@@ -92,7 +119,7 @@ function Signup() {
           
           <div  >
           <Formik
-            // onSubmit={onLoginRequest}
+            onSubmit={onRegister}
             initialValues={{email: '', password: ''}}
             validationSchema={signupSchema}>
             {(props)=><SignUpForm {...props} />}

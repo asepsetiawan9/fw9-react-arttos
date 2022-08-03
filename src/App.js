@@ -34,8 +34,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-    {/* <Route path="header" element={<Header />} />
-        <Route path="navbardash" element={<NavbarDash />} /> */}
+        <Route path="header" element={<PrivateRoute><Header /></PrivateRoute>} />
+        <Route path="navbardash" element={<NavbarDash />} />
         <Route path="tes" element={<Home />} />
         <Route path="/" element={<HomeLanding />} />
         <Route path="login" element={<Login />} />

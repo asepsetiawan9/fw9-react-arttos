@@ -1,13 +1,40 @@
 import React from 'react'
 import '../assets/css/dashstyle.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import user from '../assets/images/u3.png'
-import {Navbar, Dropdown} from 'react-bootstrap'
+import {Navbar, Dropdown, Button} from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProfile } from '../redux/asyncActions/profile'
+import { logout } from "../redux/reducers/auth";
+
 //icon
 import { FiBell, FiGrid, FiLogOut, FiPlus, FiUser, FiArrowDown, FiArrowUp, FiMenu } from "react-icons/fi";
 
 
 function Header() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const onLogout = () => {
+        dispatch(logout());
+        navigate("/login");
+      };
+
+    const token = useSelector((state) => state.auth.token)
+    const profile = useSelector((state) => state.profile.data);
+    const dataUser = useSelector((state) => state.profile.data);
+    // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    // console.log(profile?.result);
+
+    React.useEffect(()=>{
+        dispatch(getProfile(token))
+  },[])
+console.log(profile?.result);
+//   React.useEffect(()=>{
+//     dispatch(getDataLogin(token))
+// },[])
+
   return (
     <>
     <Navbar className='Navbar'>
@@ -15,7 +42,7 @@ function Header() {
     <div className="navWrap">
         <img style={{height:'60px'}} src={user} alt="user"/> 
         <div className="dashUser">
-            <p className="userDashName">Robert Chandler</p> 
+            <p className="userDashName">{profile?.result}</p> 
             <p style={{fontSize: '16px', color: '#406882'}}>+62 8139 3877 7946</p> 
         </div>
         <div>
@@ -81,7 +108,7 @@ function Header() {
                     <Dropdown.Item href="/transsearch"><FiArrowUp/> Transfer</Dropdown.Item>
                     <Dropdown.Item href="/topup"><FiPlus/> Top Up</Dropdown.Item>
                     <Dropdown.Item href="/profile"><FiUser/> Profile</Dropdown.Item>
-                    <Dropdown.Item href="/login"><FiLogOut/> Logout</Dropdown.Item>
+                    <Dropdown.Item onClick={onLogout} href="/login"><FiLogOut/> Logout</Dropdown.Item >
                 </div>
                 </Dropdown.Menu>
             

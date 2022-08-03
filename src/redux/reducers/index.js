@@ -1,10 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import character from "./character";
-import counter from "./counter";
+import profile from "./profile";
+import auth from "./auth";
 
 const reducer = combineReducers({
-  counter,
-  character
+  auth,
+  character,
+  profile,
 });
 
 export default reducer;
