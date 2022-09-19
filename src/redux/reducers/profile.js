@@ -11,7 +11,7 @@ const profile = createSlice({
   reducers: {},
   extraReducers: (build) => {
     build.addCase(getProfile.fulfilled, (state, action) => {
-      state.data = action.payload.results
+      state.data = action.payload.result
     });
     // build.addCase(getDataLogin.fulfilled, (state, action) => {
     //   console.log(getDataLogin);

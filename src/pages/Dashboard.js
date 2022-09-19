@@ -6,6 +6,11 @@ import Footer from '../components/Footer'
 import {Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import statistic from '../assets/images/statistic.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getProfile } from '../redux/asyncActions/profile';
+import {getTransactions} from '../redux/asyncActions/transactions';
+
 //icon
 import { FiArrowDown } from "react-icons/fi";
 import { FiArrowUp } from "react-icons/fi";
@@ -13,8 +18,42 @@ import { FiPlus } from "react-icons/fi";
 //photo
 import p1 from '../assets/images/p1.png'
 
+function DataHistoryTrans( {id, fullname, recipientpic, amount} ) {
+    return(
+      <div className="d-flex flex-row" style={{justifyContent: 'space-between'}}>
+        <div className="d-flex flex-row gap-4">
+          <img style={{width:'50px', height: '50px'}} src={recipientpic} alt={p1}/>
+            <div className="d-flex flex-column">
+                <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{fullname}</p>
+                <p style={{fontSize:'14px', marginTop: '-15px'}}>phone</p>
+            </div>
+        </div>
+        <div className="d-flex flex-row " style={{justifyContent: 'flex-end'}}>
+            <div >
+              { id?
+                <p style={{paddingRight: '30px', color: 'red'}}>-Rp{amount}</p>:
+                <p style={{paddingRight: '30px', color: 'green'}}>+Rp{amount}</p>
+              }
+            </div>
+        </div>
+      </div>
+    )
+  }
 
 function Dashboard() {
+    const profile = useSelector((state) => state.profile.data);
+    // console.log('ini profile', profile);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const token = useSelector((state) => state.auth.token);
+    const historyTransactions = useSelector(state => state.transactions.data);
+    // console.log('ini hitorry', historyTransactions);
+
+    React.useEffect(() => {
+        dispatch(getProfile(token));
+        dispatch(getTransactions(token));
+      }, []);
+
   return (
     <>
     <section className='headerDashboard'>
@@ -29,8 +68,8 @@ function Dashboard() {
                 <div className="mainDashTf">
                         <div className="tfDash">
                             <div><p>Balance</p></div>
-                            <div><p style={{fontSize:'40px', fontWeight:'700'}}>Rp120.000</p></div>
-                            <div><p>+62 813-9387-7946</p></div>
+                            <div><p style={{fontSize:'40px', fontWeight:'700'}}>Rp {profile.balance? profile.balance : '0'}</p></div>
+                            <div><p>{profile.phone? profile.phone : 'Your Phone'}</p></div>
                         </div>
                         
                         <div className="btnTfMain" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems:'center', gap: '20px', padding: '30px',color: '#FFFFFF'}}>
@@ -70,7 +109,7 @@ function Dashboard() {
                                 <Link style={{fontSize: '14px', textDecoration: 'none', color: '#1A374D'}} to={"/transhistory"}>See all</Link>
                             </div>
                         </div>
-                        <div className="d-flex flex-row" style={{justifyContent: 'space-between'}}>
+                        {/* <div className="d-flex flex-row" style={{justifyContent: 'space-between'}}>
                             <div className="d-flex flex-row gap-2">
                                 <img style={{maxWidth: '100%', width: '50px', height: '50px'}} src={p1} alt="photo"/>
                                 <div className="d-flex flex-column" >
@@ -141,9 +180,15 @@ function Dashboard() {
 
                             <div>  <p style={{fontSize:'16px',  fontWeight: 'bold', color: 'green'}}>+50.000</p>
                             </div>
-                        </div>
+                        </div> */}
 
-                       
+            {historyTransactions.map(o => {
+                return(
+                  <React.Fragment key={o.id}>
+                    <DataHistoryTrans recipient_id={o.recipient_id} fullname={o.recipient_fullname} recipientpic={o.recipientpic} amount={o.amount}/>
+                  </React.Fragment>
+                )
+            })}
                     </Col>
                 </div>   
  

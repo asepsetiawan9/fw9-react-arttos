@@ -12,7 +12,7 @@ const auth = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem("token");
+      // localStorage.removeItem("token");
       return initialState;
     }
   },
@@ -25,7 +25,7 @@ const auth = createSlice({
       const token = action.payload?.token;
       if (token) {
         state.token = token;
-        localStorage.setItem("token", token);
+        // localStorage.setItem("token", token);
       } else {
         state.errorMsg = action.payload?.errorMsg;
         state.successMsg = action.payload?.successMsg;

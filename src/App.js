@@ -1,6 +1,6 @@
 import React from 'react'
 import {Routes, Route} from 'react-router-dom'
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 
 // import ListCharacter from './pages/ListCharacter'
 import Home from './pages/Home'
@@ -32,7 +32,7 @@ import TesRedux from './pages/TesRedux';
 
 function App() {
   return (
-    <BrowserRouter>
+//     <BrowserRouter>
       <Routes>
         <Route path="header" element={<PrivateRoute><Header /></PrivateRoute>} />
         <Route path="navbardash" element={<NavbarDash />} />
@@ -93,7 +93,7 @@ function App() {
         
         {/* <Route path="details/:id" element={<DetailCharacter />} /> */}
       </Routes>
-    </BrowserRouter>
+//     </BrowserRouter>
   )
 }
 
