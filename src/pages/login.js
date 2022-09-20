@@ -80,8 +80,9 @@ const Login = () => {
 
   const onLogin = (value) => {
     const data = { email: value.email, password: value.password };
-    console.log(data);
+    // console.log(data);
     dispatch(login(data));
+    // console.log('sadsadsasda');
   };
 
   React.useEffect(()=>{
@@ -92,7 +93,6 @@ const Login = () => {
 
   return (
     <>
-    {/* <Container className="container-fluid"> */}
     <Row className='mh-100 '>
         <Col className='parent' md={7} >
         <Navbar>
@@ -126,7 +126,8 @@ const Login = () => {
           <Formik
             onSubmit={onLogin}
             initialValues={{email: '', password: ''}}
-            validationSchema={loginSchema}>
+            validationSchema={loginSchema}
+            >
             
             {(props)=><LoginForm {...props} />}
           </Formik>

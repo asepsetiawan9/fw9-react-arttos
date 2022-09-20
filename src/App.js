@@ -29,6 +29,7 @@ import TransSuccess from './pages/TransSuccess';
 import TransFail from './pages/TransFail';
 import PrivateRoute from "./components/PrivateRoute";
 import TesRedux from './pages/TesRedux';
+import TopupAmount from './pages/TopupAmount'
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
 
         <Route path="createpin" 
                element={<PrivateRoute><CreatePin /></PrivateRoute>} />
+       <Route path="topup-balance" 
+               element={<PrivateRoute><TopupAmount /></PrivateRoute>} />
         <Route path="createpinsuccess" 
                element={<PrivateRoute><CreatePinSuccess /></PrivateRoute>} />
         <Route path="dashboard" 

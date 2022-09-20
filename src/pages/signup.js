@@ -40,7 +40,13 @@ const SignUpForm = (props)=> {
           <div className="input-group-text">
             <FiUser style={style} /> 
           </div>    
-          <Form.Control name="username" onChange={props.handleChange} type="text" placeholder="Enter username" value={props.values.username} isInvalid={!!props.errors.username} /> 
+          <Form.Control 
+          name="username" 
+          onChange={props.handleChange} 
+          type="text" 
+          placeholder="Enter username" 
+          value={props.values.username} 
+          isInvalid={!!props.errors.username} /> 
           <Form.Control.Feedback type="invalid">{props.errors.email}</Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="input-group mb-3">
@@ -79,7 +85,8 @@ function Signup() {
   const navigate = useNavigate();
 
   const onRegister = (value) => {
-    dispatch(register(value));
+    // dispatch(register(value));
+    console.log('ini on regis');
   };
 
   React.useEffect(() => {
