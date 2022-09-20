@@ -3,24 +3,24 @@ import '../assets/css/dashstyle.css';
 import NavbarDash from '../components/NavbarDash';
 import Header from '../components/Header';
 import { Row, Col} from 'react-bootstrap';
-import {useSelector} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import { getTransactions} from '../redux/asyncActions/transactions';
 //photo
 import p1 from '../assets/images/p1.png'
 
-function DataHistoryTrans( {sender_id, name, phone, amount} ) {
+function DataHistoryTrans( {recipient_id, sender_id, phone, fullname, recipientpic, amount} ) {
   return(
     <div className="d-flex flex-row" style={{justifyContent: 'space-between'}}>
       <div className="d-flex flex-row gap-4">
         <img style={{width:'50px', height: '50px'}} src={p1} alt={p1}/>
           <div className="d-flex flex-column">
-              <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{name}</p>
+              <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{fullname}</p>
               <p style={{fontSize:'14px', marginTop: '-15px'}}>{phone}</p>
           </div>
       </div>
       <div className="d-flex flex-row " style={{justifyContent: 'flex-end'}}>
           <div >
-            { sender_id?
+            { recipient_id === sender_id?
               <p style={{paddingRight: '30px', color: 'red'}}>-Rp{amount}</p>:
               <p style={{paddingRight: '30px', color: 'green'}}>+Rp{amount}</p>
             }
@@ -31,43 +31,13 @@ function DataHistoryTrans( {sender_id, name, phone, amount} ) {
 }
 
 function TransHistory() {
-  const navigate = useNavigate();
-  const historyTransactions = useSelector(state => state.transactions.data);
-console.log('ini hitory', historyTransactions);
-  const [data] = React.useState({
-    success: true,
-    massage: 'List User',
-    results: [
-        {
-            "id": 1,
-            "name": "Zepsi",
-            "phone": "082216115722",
-            "amount": "100000",
-            "sender_id": null
-        },
-        {
-          "id": 2,
-          "name": "ica",
-          "phone": "0822112331",
-          "amount": "500000",
-          "sender_id": null
-        },
-        {
-          "id": 3,
-          "name": "sri",
-          "phone": "0892316312",
-          "amount": "5000000",
-          "sender_id": 1
-        },
-        {
-          "id": 4,
-          "name": "Marisa",
-          "phone": "0892312112",
-          "amount": "1000000",
-          "sender_id": 2
-        }
-    ]
-})
+  const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.token);
+    const historyTransactions = useSelector(state => state.transactions.data);
+
+    React.useEffect(() => {
+      dispatch(getTransactions(token));
+      }, []);
   return (
     <>
     <section className='headerDashboard'>
@@ -85,26 +55,21 @@ console.log('ini hitory', historyTransactions);
               </div>
                     
             </div>
-        <div className="wrapTrasn">
-            
-            <div>
-                <p style={{fontSize: '16px', color: '#406882'}}>This Week</p>
-            </div>
-
-            {data.results.map(o => {
-                return(
+          <div className="wrapTrasn">
+              <div>
+                  <p style={{fontSize: '16px', color: '#406882'}}>This Week</p>
+              </div>
+              {historyTransactions.result?.map(o => {
+                  return(
                   <React.Fragment key={o.id}>
-                    <DataHistoryTrans sender_id={o.sender_id} name={o.name} phone={o.phone} amount={o.amount}/>
+                      <DataHistoryTrans recipient_id={o.recipient_id} sender_id={o.sender_id} phone={o.recipient_phone}fullname={o.recipient_fullname} recipientpic={o.recipientpic} amount={o.amount}/>
                   </React.Fragment>
-                )
-            })}
-        </div>
-    </div>
-
-    </Col>
-  
+                  )
+              })}
+          </div>
+          </div>
+        </Col>
       </Row>
-      
     </section>
            
     <footer >

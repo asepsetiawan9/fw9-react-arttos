@@ -5,12 +5,39 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import { getUsers} from '../redux/asyncActions/transactions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 //photo
 import p1 from '../assets/images/p1.png'
-import p2 from '../assets/images/p2.png'
-import p3 from '../assets/images/p3.png'
+
+function DataUsers( {id, phone, fullname, picture} ) {
+  return(
+    <Link className='cardSearchTrans' to={"/transinput/"}>
+      <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
+      {picture? 
+        <img style={{width:'50px', height: '50px'}} src={picture} alt={p1}/> :
+        <img style={{width:'50px', height: '50px'}} src={p1} alt={p1}/>}
+          <div class="d-flex flex-column">
+              <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{fullname? fullname : 'User Name'}</p>
+              <p style={{fontSize:'14px', marginTop: '-15px'}}>{phone? phone : 'Phone User'}</p>
+          </div>
+      </div>
+    </Link>
+  )
+}
 
 function TransSearch() {
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    dispatch(getUsers(token));
+    }, []);
+
+  const allUsers = useSelector((state) => state.transactions?.dataUser);
+
   return (
     <>
     <section className='headerDashboard'>
@@ -31,70 +58,27 @@ function TransSearch() {
                 borderRadius: '12px', border: 'unset', color: '#fff'}}/>
                 </div>  
             </div>
-        <div className="wrapTrasn">
-            <Link className='cardSearchTrans' to={"/transinput/"}>
-              <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
-                <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
-                  <div class="d-flex flex-column">
-                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                      <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
-                  </div>
-              </div>
-            </Link>
-
-            <Link className='cardSearchTrans' to={"/login/"}>
-              <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
-                <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
-                  <div class="d-flex flex-column">
-                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                      <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
-                  </div>
-              </div>
-            </Link>
-
-            <Link className='cardSearchTrans' to={"/login/"}>
-              <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
-                <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
-                  <div class="d-flex flex-column">
-                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                      <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
-                  </div>
-              </div>
-            </Link>
-
-            <Link className='cardSearchTrans' to={"/login/"}>
-              <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
-                <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
-                  <div class="d-flex flex-column">
-                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                      <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
-                  </div>
-              </div>
-            </Link>
-
-            <Link className='cardSearchTrans' to={"/login/"}>
-              <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
-                <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
-                  <div class="d-flex flex-column">
-                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                      <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
-                  </div>
-              </div>
-            </Link>
-
+            <div className="wrapTrasn">
+            {allUsers.result?.map(o => {
+                return(
+                <React.Fragment key={o.id}>
+                    <DataUsers 
+                    recipient_id={o.recipient_id} 
+                    id={o.id} 
+                    phone={o.phone} 
+                    fullname={o.fullname} 
+                    picture={o.picture} />
+                </React.Fragment>
+                  )
+              })}
+            </div>
         </div>
-    </div>
-
-    </Col>
-  
+        </Col>
       </Row>
-      
     </section>
-           
     <footer >
       <Footer/>
     </footer>
-
     </>
   )
 }

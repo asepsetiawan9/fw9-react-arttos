@@ -85,8 +85,8 @@ function Signup() {
   const navigate = useNavigate();
 
   const onRegister = (value) => {
-    // dispatch(register(value));
-    console.log('ini on regis');
+    dispatch(register(value));
+    // console.log('ini on regis');
   };
 
   React.useEffect(() => {
@@ -124,7 +124,7 @@ function Signup() {
                 With 30.000+ Users</h3>
             <p>Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</p>
           
-          <div  >
+          <div>
           <Formik
             onSubmit={onRegister}
             initialValues={{email: '', password: ''}}
