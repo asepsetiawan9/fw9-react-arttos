@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import { Row, Col} from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom'
+import { useSelector } from 'react-redux';
 //photo
 import p1 from '../assets/images/p1.png'
 import success from '../assets/images/success.png'
@@ -13,6 +14,9 @@ import success from '../assets/images/success.png'
 import { FiShare2 } from "react-icons/fi";
 
 function TransSuccess() {
+    const detailInput = useSelector(state => state.transactions.dataTransfer);
+    const dataRecipient = useSelector(state => state.transactions.dataRecipient);
+    const profile = useSelector((state) => state.profile.data);
 
   return (
     <>
@@ -36,25 +40,25 @@ function TransSuccess() {
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Amount</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp100.000</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {detailInput?.amount || '0'}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Balance Left</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp20.000</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {profile?.balance || '0'}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Date & Time</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>May 11, 2020 - 12.20</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{detailInput?.date} {detailInput?.time}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Notes</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>For buying some socks</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{detailInput?.note}</p>
                     </div>
                 </div>
                 
@@ -64,10 +68,12 @@ function TransSuccess() {
 
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-row gap-4 img-fluid" style={{padding: '5px 20px'}}>
-                        <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
+                        {dataRecipient.picture? 
+                        <img style={{width:'50px', height: '50px'}} src={dataRecipient.picture} alt="user1"/>:
+                        <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>}
                         <div className="d-flex flex-column">
-                            <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                            <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
+                            <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{dataRecipient?.fullname || 'recipient name'} </p>
+                            <p style={{fontSize:'14px', marginTop: '-15px'}}>{dataRecipient?.phone || 'recipient phone'} </p>
                         </div>
                     </div>
                 </div>
@@ -75,7 +81,7 @@ function TransSuccess() {
                 <div className='d-flex flex-row gap-2' style={{justifyContent: 'flex-end', textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
                     <Button className='btn btn-fw9' style={{ background:'#1A374D', padding: '10px'}}><FiShare2/></Button>
                     <Button className='btn btn-fw9' style={{ background:'#406882', padding: '10px'}} >Download PDF</Button>
-                    <Button className='btn btn-fw9' style={{ padding: '10px'}} >Back to Home</Button>
+                    <Link to={'/dashboard'} className='btn btn-fw9' style={{ padding: '10px'}} >Back to Home</Link>
                 </div>
             </div>
       

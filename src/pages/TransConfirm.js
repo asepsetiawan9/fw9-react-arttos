@@ -2,20 +2,139 @@ import React, { useState } from 'react'
 import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
-import { Row, Col} from 'react-bootstrap'
+import { Row, Col, Form} from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import {transferMoney} from '../redux/asyncActions/transactions';
 //photo
 import p1 from '../assets/images/p1.png'
 import { FiThermometer } from 'react-icons/fi'
 import Footer from '../components/Footer'
 
-function TransConfirm() {
-    const [show, setShow] = useState(false);
+const ModalPin = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const pinUser = useSelector(state => state.auth.pin);
+    const token = useSelector((state) => state.auth.token);
+    const detailInput = useSelector(state => state.transactions.dataTransfer);
 
+    const [form, setForm] = useState({ first: '', sec: '', third: '', fourth: '', fifth: '', sixth: '' });
+    const date_time = `${detailInput.date} ${detailInput.time}`;
+    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleChangeText = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      };
+
+    const onInputPin = (value) => {
+        const pin = Object.values(form).join('');
+        console.log('ini pin input', pin, 'ini user', pinUser);
+         if (pin !== pinUser) {
+            console.log('trans fail');
+            const data = {
+                amount: detailInput.amount,
+                recipient_id: detailInput.recipient_id,
+                note: detailInput.note,
+                time_date: date_time,
+              };
+            dispatch(transferMoney({data, token}));
+            navigate('/transsuccess');
+          } else {
+             navigate('/transfail');
+          }
+      };
+
+    return(
+        <>
+        <div style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
+            <Button className='btn btn-fw9' style={{padding: '10px 26px'}} onClick={handleShow}>
+                Confirm
+            </Button>
+        </div>
+
+        <Modal show={show} onHide={handleClose} style={{color: '#1A374D'}}>
+            <Modal.Header style={{borderBottom: 'unset'}} closeButton>
+                <Modal.Title>
+                    <div>
+                    <p style={{fontSize: '16px', fontWeight: 'bold'}}>Enter PIN to Transfer</p>
+                    </div>
+                    <div>
+                    <p style={{fontSize: '16px'}}>Enter your 6 digits PIN for confirmation to <br/> continue transferring money. </p>
+                    </div>
+                </Modal.Title>
+                </Modal.Header>
+            <Modal.Body>
+            <Form  noValidate >
+            <div className="pin-input-wrapper ">
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input" 
+                    name="first" 
+                    onChange={handleChangeText}
+                    />
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input" 
+                    name="sec" 
+                    onChange={handleChangeText}
+                    />
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input" 
+                    name="third" 
+                    onChange={handleChangeText}
+                    />
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input" 
+                    name="fourth" 
+                    onChange={handleChangeText}
+                    />
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input" 
+                    name="fiveth" 
+                    onChange={handleChangeText}
+                    />
+                </div>
+
+                <div className="pin-form-wrap">
+                    <input type="text" className="pin-form-input" 
+                    name="sixth" 
+                    onChange={handleChangeText}
+                    />
+                </div>
+            </div>
+            </Form>
+            </Modal.Body>
+            <Modal.Footer style={{borderTop: 'unset'}}>
+                <button 
+                // to={'/transsuccess'} 
+                onClick={onInputPin}
+                style={{padding: '10px 26px'}}  className='btn btn-fw9' >
+                    Confrim
+                </button>
+            </Modal.Footer>
+        </Modal>
+        </>
+    )
+}
+
+function TransConfirm() {
+   
+    const detailInput = useSelector(state => state.transactions.dataTransfer);
+    const dataRecipient = useSelector(state => state.transactions.dataRecipient);
+    const profile = useSelector((state) => state.profile.data);
+
   return (
     <>
     <section className='headerDashboard'>
@@ -35,10 +154,12 @@ function TransConfirm() {
             <div className="wrapTrasn">
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-row gap-4" style={{padding: '5px 20px'}}>
-                        <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
+                        {dataRecipient.picture? 
+                        <img style={{width:'50px', height: '50px'}} src={dataRecipient.picture} alt="user1"/>:
+                        <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>}
                         <div className="d-flex flex-column">
-                            <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                            <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
+                            <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{dataRecipient.fullname? dataRecipient.fullname : 'Recipient Name' }</p>
+                            <p style={{fontSize:'14px', marginTop: '-15px'}}>{dataRecipient.phone? dataRecipient.phone : 'phone' }</p>
                         </div>
                     </div>
                 </div>
@@ -50,89 +171,32 @@ function TransConfirm() {
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Amount</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp100.000</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {detailInput.amount? detailInput.amount: '0'}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Balance Left</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp20.000</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {profile.balance? profile.balance : '0'}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Date & Time</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>May 11, 2020 - 12.20</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{detailInput.date} {detailInput.time}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Notes</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>For buying some socks</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{detailInput.note? detailInput.note: 'note transfer'}</p>
                     </div>
                 </div>
-                <div style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
-                    <Button className='btn btn-fw9' style={{padding: '10px 26px'}} onClick={handleShow}>
-                        Confirm
-                    </Button>
-                </div>
+                <ModalPin/>
             </div>
-        
-        <Modal show={show} onHide={handleClose} style={{color: '#1A374D'}}>
-            <Modal.Header style={{borderBottom: 'unset'}} closeButton>
-                <Modal.Title>
-                    <div>
-                    <p style={{fontSize: '16px', fontWeight: 'bold'}}>Enter PIN to Transfer</p>
-                    </div>
-                    <div>
-                    <p style={{fontSize: '16px'}}>Enter your 6 digits PIN for confirmation to <br/> continue transferring money. </p>
-                    </div>
-                </Modal.Title>
-                </Modal.Header>
-            <Modal.Body>
-            <div className="pin-input-wrapper ">
-
-                <div className="pin-form-wrap">
-                    <input type="text" className="pin-form-input"/>
-                </div>
-
-                <div className="pin-form-wrap">
-                    <input type="text" className="pin-form-input"/>
-                </div>
-
-                <div className="pin-form-wrap">
-                    <input type="text" className="pin-form-input"/>
-                </div>
-
-                <div className="pin-form-wrap">
-                    <input type="text" className="pin-form-input"/>
-                </div>
-
-                <div className="pin-form-wrap">
-                    <input type="text" className="pin-form-input"/>
-                </div>
-
-                <div className="pin-form-wrap">
-                    <input type="text" className="pin-form-input"/>
-                </div>
-            </div>
-            </Modal.Body>
-            <Modal.Footer style={{borderTop: 'unset'}}>
-                <Link to={'/transfail'} style={{padding: '10px 26px', background: 'red'}}  className='btn btn-fw9' >
-                    Fail
-                </Link>
-                <Link to={'/transsuccess'} style={{padding: '10px 26px'}}  className='btn btn-fw9' >
-                    Save Changes
-                </Link>
-            </Modal.Footer>
-        </Modal>
-      
-    </div>
-
+        </div>
     </Col>
-  
       </Row>
-      
     </section>
            
     <footer >

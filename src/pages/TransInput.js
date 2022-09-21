@@ -7,6 +7,10 @@ import { Row, Col, Form } from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import {getUserById} from '../redux/asyncActions/transactions';
+import {inputAmount} from '../redux/reducers/transactions';
 //photo
 import p1 from '../assets/images/p1.png'
 
@@ -17,31 +21,41 @@ const amountSchema = Yup.object().shape({
   .max(10000000, 'Max Amount is 10.000.000')
 })
 
-const AmountForm = ({errors, handleSubmit, handleChange})=> {
-
-  console.log(errors)
+const AmountForm = (props) => {
+  const profile = useSelector((state) => state.profile.data);
+ 
   return(
     <>
-        <Form  noValidate onSubmit={handleSubmit}>
+        <Form  noValidate onSubmit={props.handleSubmit}>
           <div className="inputAmount">
             <div>
-              <Form.Control className="form-control wrap-amount text-center" style={{borderBottom:'none', fontSize: '42px', color:'#1A374D', paddingTop: '40px', fontWeight: '900'}} name="amount" onChange={handleChange} type="number" placeholder="0.00" isInvalid={!!errors.amount} /> 
-                <Form.Control.Feedback className="wrap-amount text-center" type="invalid">{errors.amount}</Form.Control.Feedback>
+              <Form.Control className="form-control wrap-amount text-center" 
+              style={{borderBottom:'none', fontSize: '42px', color:'#1A374D', paddingTop: '40px', fontWeight: '900'}} 
+              name="amount" 
+              value={props.values.password}
+              onChange={props.handleChange} 
+              type="number" 
+              placeholder="0.00" 
+              isInvalid={!!props.errors.amount}
+              /> 
+                <Form.Control.Feedback className="wrap-amount text-center" type="invalid">{props.errors.amount}</Form.Control.Feedback>
                 
             </div>
 
             <div>
-                <p style={{fontSize: '16px', color:'#1A374D', fontWeight: '700'}}>Rp120.000 Available</p>
+                <p style={{fontSize: '16px', color:'#1A374D', fontWeight: '700'}}>Rp {profile.balance? profile.balance: '0'} Available</p>
             </div>
             <div className="input-group" style={{paddingLeft: '150px', paddingRight:'150px'}}>
                 <div className="input-group-text"><i data-feather="edit-2"></i>
                 </div>
-                <input type="text" className="form-control" placeholder="Add some notes" />
+                <input type="text" className="form-control" placeholder="Add some notes" name="note" 
+                value={props.values.note}
+                onChange={props.handleChange}  />
             </div>
             
           </div>
           <div style={{textAlign:  'right',  padding: '20px 50px 30px 0px'}}>
-              <Link  className='regis' to={"/confirm/"}>continue</Link>
+              <button type="submit" className='regis' >continue</button>
           </div>
         </Form>
     </>
@@ -49,6 +63,39 @@ const AmountForm = ({errors, handleSubmit, handleChange})=> {
 }
 
 function TransSearch() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const recipient_id = useSelector(state => state.transactions.dataTransfer);
+  const recipient = useSelector(state => state.transactions.dataRecipient);
+  // console.log('recipientnya', recipient);
+  const today = new Date();
+  var currentdate = new Date();
+  var date =
+    currentdate.getDate() +
+    '-' +
+    (currentdate.getMonth() + 1) +
+    '-' +
+    currentdate.getFullYear();
+
+  var time =
+    currentdate.getHours() +
+    ':' +
+    currentdate.getMinutes() +
+    ':' +
+    currentdate.getSeconds();
+
+    const onInputAmount = (value) => {
+      const data = { amount: value.amount, note: value.note, date, time };
+      //  console.log(data);
+      dispatch(inputAmount(data));
+      navigate('/confirm');
+    };
+
+
+  React.useEffect(() => {
+    dispatch(getUserById(recipient_id.recipient_id));
+  }, []);
   return (
     <>
     <section className='headerDashboard'>
@@ -65,17 +112,20 @@ function TransSearch() {
                   <p style={{fontSize: '18px', fontWeight: 'bold'}}>Transfer Money</p>
                 </div>
                 <div>
-                    <input class="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
+                    <input className="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
                 borderRadius: '12px', border: 'unset', color: '#fff'}}/>
                 </div>  
             </div>
         <div className="wrapTrasn">
             <div className='cardSearchTrans'>
               <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
+                {recipient.picture? 
+                <img style={{width:'50px', height: '50px'}} src={recipient.picture} alt="user1"/>:
                 <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
+                }
                   <div className="d-flex flex-column">
-                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                      <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
+                      <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{recipient.fullname? recipient.fullname: 'recipient name'}</p>
+                      <p style={{fontSize:'14px', marginTop: '-15px'}}>{recipient.phone? recipient.phone: 'recipient phone'}</p>
                   </div>
               </div>
             </div>
@@ -87,8 +137,8 @@ function TransSearch() {
         </div>
 
         <Formik
-            // onSubmit={onLoginRequest}
-            initialValues={{amount: ''}}
+            onSubmit={onInputAmount}
+            initialValues={{amount: '', note: ''}}
             validationSchema={amountSchema}>
             {(props)=><AmountForm {...props} />}
           </Formik>

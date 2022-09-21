@@ -4,7 +4,7 @@ import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Row, Col} from 'react-bootstrap'
-import Button from 'react-bootstrap/Button';
+import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
 //photo
 import p1 from '../assets/images/p1.png'
@@ -13,6 +13,9 @@ import fail from '../assets/images/failed.png'
 import { FiShare2 } from "react-icons/fi";
 
 function TransSuccess() {
+    const detailInput = useSelector(state => state.transactions.dataTransfer);
+    const dataRecipient = useSelector(state => state.transactions.dataRecipient);
+    const profile = useSelector((state) => state.profile.data);
 
   return (
     <>
@@ -30,32 +33,31 @@ function TransSuccess() {
 
                 <div className='d-flex flex-column gap-2 img-fluid' style={{padding: '60px 0px 10px 0px' , textAlign: 'center', alignItem: 'center'}}>
                     <div><img style={{width:'50px', height: '50px'}} src={fail} alt="success"/></div>
-                    <div><p> Transfer Failed</p></div>
-                    <div>We can’t transfer your money at the moment, we recommend you to check your internet connection and try again.</div>
+                    <div><p> Transfer Success</p></div>
                 </div>
 
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Amount</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp100.000</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {detailInput?.amount || '0'}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Balance Left</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp20.000</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {profile?.balance || '0'}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Date & Time</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>May 11, 2020 - 12.20</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{detailInput?.date} {detailInput?.time}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Notes</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>For buying some socks</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{detailInput?.note}</p>
                     </div>
                 </div>
                 
@@ -65,10 +67,12 @@ function TransSuccess() {
 
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-row gap-4 img-fluid" style={{padding: '5px 20px'}}>
-                        <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>
+                        {dataRecipient.picture? 
+                        <img style={{width:'50px', height: '50px'}} src={dataRecipient.picture} alt="user1"/>:
+                        <img style={{width:'50px', height: '50px'}} src={p1} alt="user1"/>}
                         <div className="d-flex flex-column">
-                            <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Samuel Suhei</p>
-                            <p style={{fontSize:'14px', marginTop: '-15px'}}>+62 813-8492-9994</p>
+                            <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{dataRecipient?.fullname || 'recipient name'} </p>
+                            <p style={{fontSize:'14px', marginTop: '-15px'}}>{dataRecipient?.phone || 'recipient phone'} </p>
                         </div>
                     </div>
                 </div>

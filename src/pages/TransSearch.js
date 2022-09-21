@@ -4,16 +4,23 @@ import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Row, Col} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
 import { getUsers} from '../redux/asyncActions/transactions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import {selectRecipient} from '../redux/reducers/transactions';
 //photo
 import p1 from '../assets/images/p1.png'
 
 function DataUsers( {id, phone, fullname, picture} ) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return(
-    <Link className='cardSearchTrans' to={"/transinput/"}>
+    <div 
+    onClick={() => {
+      dispatch(selectRecipient(id));
+      navigate('/transinput');
+    }}
+    className='cardSearchTrans'>
       <div className="d-flex flex-row gap-4" style={{padding: '0px 20px'}}>
       {picture? 
         <img style={{width:'50px', height: '50px'}} src={picture} alt={p1}/> :
@@ -23,7 +30,7 @@ function DataUsers( {id, phone, fullname, picture} ) {
               <p style={{fontSize:'14px', marginTop: '-15px'}}>{phone? phone : 'Phone User'}</p>
           </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
