@@ -23,8 +23,10 @@ const auth = createSlice({
     });
     build.addCase(login.fulfilled, (state, action) => {
       const token = action.payload?.token;
+      const pin = action.payload?.pin;
       if (token) {
         state.token = token;
+        state.pin = pin;
         // localStorage.setItem("token", token);
       } else {
         state.errorMsg = action.payload?.errorMsg;

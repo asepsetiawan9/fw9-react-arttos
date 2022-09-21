@@ -20,15 +20,16 @@ import p1 from '../assets/images/p1.png'
 
 function Dashboard() {
     const profile = useSelector((state) => state.profile.data);
-    const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.token);
     const historyTransactions = useSelector(state => state.transactions.dataLimit);
-    console.log(historyTransactions);
 
+    // console.log(historyTransactions);
+    const dispatch = useDispatch();
     React.useEffect(() => {
       dispatch(getTransactionsLimit(token));
       dispatch(getProfile(token));
       }, []);
+
     
   return (
     <>

@@ -33,7 +33,10 @@ function Header() {
     <Navbar className='Navbar'>
         <Link className='titleapp' to='/dashboard'>ART-TOS</Link>
     <div className="navWrap">
-        <img style={{height:'60px'}} src={profile.picture} alt="user"/> 
+        {profile.picture?
+        <img style={{height:'60px'}} src={profile.picture} alt="user"/>:
+        <img style={{height:'60px'}} src={user} alt="user"/>
+        }
         <div className="dashUser">
             <p className="userDashName">{profile.fullname? profile.fullname: 'Your Name' }</p> 
             <p style={{fontSize: '16px', color: '#406882'}}>{profile.phone? profile.phone: 'Your Phone' }</p> 
