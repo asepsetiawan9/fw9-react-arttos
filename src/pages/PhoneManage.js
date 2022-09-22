@@ -5,10 +5,12 @@ import Header from '../components/Header'
 import { Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import Footer from '../components/Footer'
+import { useSelector } from 'react-redux';
 //photo
 import { FiTrash2 } from "react-icons/fi";
 
 function PersonalInfo() {
+  const profile = useSelector((state) => state.profile.data);
   return (
     <>
     <section className='headerDashboard'>
@@ -33,7 +35,7 @@ function PersonalInfo() {
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Primary</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>+62 813 9387 7946</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{profile?.phone || 'SetUp Your Phone'}</p>
                     </div>
                     <div style={{padding: '10px 0px'}}>
                         <Link to={'/phoneadd'} ><FiTrash2 style={{color: '#1A374D'}} size={25}/></Link>

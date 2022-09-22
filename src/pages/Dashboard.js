@@ -45,7 +45,10 @@ function Dashboard() {
                 <div className="mainDashTf">
                         <div className="tfDash">
                             <div><p>Balance</p></div>
-                            <div><p style={{fontSize:'40px', fontWeight:'700'}}>Rp {profile.balance? profile.balance : '0'}</p></div>
+                            <div><p style={{fontSize:'40px', fontWeight:'700'}}>
+                            {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
+                            .format(parseInt(profile?.balance||0))}
+                              </p></div>
                             <div><p>{profile.phone? profile.phone : 'Your Phone'}</p></div>
                         </div>
                         
@@ -122,8 +125,12 @@ function DataHistoryTrans( {recipient_id, sender_id, phone, fullname, recipientp
       <div className="d-flex flex-row " style={{justifyContent: 'flex-end'}}>
           <div >
             { recipient_id === sender_id?
-              <p style={{paddingRight: '30px', color: 'red'}}>-Rp{amount}</p>:
-              <p style={{paddingRight: '30px', color: 'green'}}>+Rp{amount}</p>
+              <p style={{paddingRight: '30px', color: 'red'}}>-
+                {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
+                .format(parseInt(amount||0))}
+                </p>:
+              <p style={{paddingRight: '30px', color: 'green'}}>+{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
+              .format(parseInt(amount||0))}</p>
             }
           </div>
       </div>

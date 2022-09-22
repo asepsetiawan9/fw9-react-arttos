@@ -3,14 +3,58 @@ import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { Row, Col} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import { Row, Col, Form} from 'react-bootstrap'
+import * as Yup from 'yup'
+import {Formik} from 'formik'
 import { FiPhone } from "react-icons/fi";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { updateProfile } from '../redux/asyncActions/profile';
 
+const phoneSchema = Yup.object().shape({
+  phone: Yup.string().matches(new RegExp('[0-9]{7}'))
+})
+
+const PhoneForm = (props)=>{
+  return(
+    <Form
+    noValidate onSubmit={(props.handleSubmit)} className='d-flex flex-column gap-4 addPhone' >
+      <div className="input-group " >
+          <div className="input-group-text">
+              <div style={{color: '#1A374D'}}>
+              <FiPhone/> +62
+              </div>
+            
+          </div>
+          <Form.Control 
+          name="phone"
+          value={props.values.phone}
+          onChange={props.handleChange}
+          isInvalid={!!props.errors.phone}
+          type="number" className="form-control" placeholder="Enter your phone number"  />
+          <Form.Control.Feedback className="wrap-amount text-center" type="invalid">{props.errors.phone}</Form.Control.Feedback>
+      </div>
+
+      <div className="d-grid " >
+          <button className='btn btn-fw9' type="submit">Add Phone Number</button>
+      </div>
+  </Form>
+  )
+}
 
 
 function PhoneAdd() {
-    
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  const msgEdit = useSelector((state) => state.profile.msgUpdate);
+  
+  const onUpdatePhone = (value) => {
+    const data = { phone: value.phone};
+    dispatch(updateProfile({data, token}));
+    alert(msgEdit)
+    navigate('/profile');
+  };
   return (
     <>
     <section className='headerDashboard'>
@@ -32,25 +76,12 @@ function PhoneAdd() {
                   <p style={{fontSize: '16px'}}>Add at least one phone number for the transfer <br/> ID so you can start transfering your money to <br/> another user.</p>
                 </div>
 
-                <div className='d-flex flex-column gap-4 addPhone' >
-                    <div className="input-group " >
-                        <div className="input-group-text">
-                            <div style={{color: '#1A374D'}}>
-                            <FiPhone/> +62
-                            </div>
-                          
-                        </div>
-                        <input type="number" className="form-control" placeholder="Enter your phone number" />
-                    </div>
-
-                    <div className="d-grid " >
-                        <Link className='btn btn-fw9'  to={"/profile/"}>Add Phone Number</Link>
-                    </div>
-
-                    
-
-                   
-                </div>
+                <Formik
+            onSubmit={onUpdatePhone}
+            initialValues={{phone: ''}}
+            validationSchema={phoneSchema}>
+            {(props)=><PhoneForm {...props} />}
+          </Formik>
             </div>
       
     </div>

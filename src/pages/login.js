@@ -47,9 +47,9 @@ const LoginForm = (props)=> {
             <FiLock style={style} /> 
           </div>    
           <Form.Control 
-          name="password" 
           type="password"  
           placeholder="Password" 
+          name="password" 
           value={props.values.password}
           onChange={props.handleChange} 
           isInvalid={!!props.errors.password} />

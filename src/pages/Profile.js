@@ -5,6 +5,8 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile } from '../redux/asyncActions/profile';
 //icon
 import { FiEdit2 } from "react-icons/fi";
 import { FiArrowRight } from "react-icons/fi";
@@ -12,6 +14,13 @@ import { FiArrowRight } from "react-icons/fi";
 import p1 from '../assets/images/p1.png'
 
 function Profile() {
+const profile = useSelector((state) => state.profile.data);
+const token = useSelector((state) => state.auth.token);
+// console.log('ini ini ini', profile);
+const dispatch = useDispatch();
+React.useEffect(() => {
+dispatch(getProfile(token));
+      }, []);
   return (
     <>
     <section className='headerDashboard'>
@@ -25,16 +34,18 @@ function Profile() {
         <div className='d-flex flex-column transferTo' style={{background: '#B1D0E0', borderRadius: '20px'}}>
             <div className="d-flex flex-column gap-1" style={{justifyContent: 'center', padding:'50px 25px', alignItems: 'center'}} >
                 <div>
-                    <img src={p1} alt='useredit'></img>
+                    {profile.picture?
+                    <img className='imgProfile' src={profile.picture} alt='useredit'></img>:
+                    <img src={p1} alt='useredit'></img>}
                 </div>
                 <div>
                     <FiEdit2/> Edit
                 </div>
                 <div>
-                  <p style={{fontSize: '18px', fontWeight: 'bold'}}>Robert Chandler</p>
+                  <p style={{fontSize: '18px', fontWeight: 'bold'}}>{profile?.fullname || 'User Name'}</p>
                 </div> 
                 <div>
-                  <p style={{fontSize: '16px'}}>+62 813-9387-7946</p>
+                  <p style={{fontSize: '16px'}}>{profile?.phone || 'Phone User'}</p>
                 </div>
             </div>
         <div>

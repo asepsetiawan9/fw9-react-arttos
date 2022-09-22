@@ -6,12 +6,14 @@ import { Row, Col, Form} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { updatePassword } from '../redux/asyncActions/profile';
 
 import { FiEye } from "react-icons/fi";
 import { FiLock } from "react-icons/fi";
 
 const passNewSchema = Yup.object().shape({
-    currentpassword: Yup.string().min(6).required('Password is required'),
     password: Yup.string().min(6).required('Password is required'),
     passwordConfirmation: Yup.string().min(6)
        .oneOf([Yup.ref('password'), null], 'Passwords must match')
@@ -23,17 +25,6 @@ const passNewSchema = Yup.object().shape({
     return(
       <>
         <Form className='d-flex flex-column gap-3' noValidate onSubmit={handleSubmit}>
-  
-        <Form.Group className="input-group mb-3">
-            <div className="input-group-text">
-              <FiLock style={style} /> 
-            </div>    
-            <Form.Control name="currentpassword" onChange={handleChange} type="password"  placeholder="Current Password" isInvalid={!!errors.currentpassword} />
-            <div className="input-group-text">
-            <FiEye style={style} />
-            </div>
-            <Form.Control.Feedback type="invalid">{errors.currentpassword}</Form.Control.Feedback>
-          </Form.Group>
           <Form.Group className="input-group mb-3">
             <div className="input-group-text">
               <FiLock style={style} /> 
@@ -57,7 +48,7 @@ const passNewSchema = Yup.object().shape({
           </Form.Group>
           
           <div className="d-grid ">
-              <Link className='btn btn-fw9' to={"/profile/"}>Change Password</Link>
+              <button className='btn btn-fw9' type='submit'>Change Password</button>
           </div>
         </Form>
       </>
@@ -66,7 +57,18 @@ const passNewSchema = Yup.object().shape({
   
 
 function PassChange() {
-    
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
+  const msgEdit = useSelector((state) => state.profile.msgUpdate);
+  
+  const onUpdatePassword = (value) => {
+    const data = { passsword: value.password};
+    // console.log('ini datanya', data);
+    dispatch(updatePassword({data, token}));
+    // alert(msgEdit)
+    // navigate('/profile');
+  };
   return (
     <>
     <section className='headerDashboard'>
@@ -90,7 +92,7 @@ function PassChange() {
 
                 <div className='d-flex flex-column gap-4 passChange'>
                 <Formik
-                    // onSubmit={onLoginRequest}
+                    onSubmit={onUpdatePassword}
                     initialValues={{currentpassword: '', password: '', passwordConfirmation: ''}}
                     validationSchema={passNewSchema}>
                     {(props)=><PassNewForm {...props} />}

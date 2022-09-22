@@ -34,7 +34,7 @@ function Header() {
         <Link className='titleapp' to='/dashboard'>ART-TOS</Link>
     <div className="navWrap">
         {profile.picture?
-        <img style={{height:'60px'}} src={profile.picture} alt="user"/>:
+        <img className='imgProfile' src={profile.picture} alt="user"/>:
         <img style={{height:'60px'}} src={user} alt="user"/>
         }
         <div className="dashUser">
