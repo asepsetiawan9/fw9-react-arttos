@@ -40,13 +40,15 @@ function TransSuccess() {
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Amount</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {detailInput?.amount || '0'}</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
+                .format(parseInt(detailInput?.amount ||0))}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>
                     <div className="d-flex flex-column" style={{padding: '20px 0px 0px 20px'}}>
                         <p style={{fontSize:'14px', marginTop: '-10px'}}>Balance Left</p>
-                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>Rp {profile?.balance || '0'}</p>
+                        <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
+                .format(parseInt(profile?.balance||0))}</p>
                     </div>
                 </div>
                 <div className='cardSearchTrans'>

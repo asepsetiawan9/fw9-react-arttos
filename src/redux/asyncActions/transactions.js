@@ -41,7 +41,7 @@ export const getUserById = createAsyncThunk(
     const result = {};
     try {
       // console.log('ini dari profile', request);
-      const send = qs.stringify(request);
+      // const send = qs.stringify(request);
       const {data} = await http().get(`/users/getuserdetail/${request}`);
       return data;
     } catch (e) {
@@ -96,11 +96,11 @@ export const topup = createAsyncThunk('transaction/top-up', async request => {
   }
 });
 
-export const getUsers = createAsyncThunk('users/all-users', async token => {
+export const getUsers = createAsyncThunk('users/all-users', async (send) => {
   const result = {};
   try {
-    const {data} = await http(token).get('/users/getallusers');
-    console.log('ini dari actions');
+    const {data} = await http(send.token).get(`/users/getallusers?search=${send.search || ''}`);
+    console.log('ini dari actions dan ini datanya', data);
     return data;
   } catch (e) {
     result.message = e.response.data?.message;

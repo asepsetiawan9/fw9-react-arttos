@@ -43,7 +43,8 @@ const AmountForm = (props) => {
             </div>
 
             <div>
-                <p style={{fontSize: '16px', color:'#1A374D', fontWeight: '700'}}>Rp {profile.balance? profile.balance: '0'} Available</p>
+                <p style={{fontSize: '16px', color:'#1A374D', fontWeight: '700'}}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' })
+                .format(parseInt(profile?.balance ||0))} Available</p>
             </div>
             <div className="input-group" style={{paddingLeft: '150px', paddingRight:'150px'}}>
                 <div className="input-group-text"><i data-feather="edit-2"></i>

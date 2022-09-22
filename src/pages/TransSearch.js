@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { Row, Col} from 'react-bootstrap'
+import { Row, Col, Form} from 'react-bootstrap'
 import { getUsers} from '../redux/asyncActions/transactions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -36,8 +36,18 @@ function DataUsers( {id, phone, fullname, picture} ) {
 
 function TransSearch() {
   const token = useSelector((state) => state.auth.token);
+  const [search, setSearch] = useState({ search: '' });
+  const handleChangeText = (e) => {
+
+    setSearch({ ...search, [e.target.name]: e.target.value });
+  };
+
+  const data = {
+    search: search.search,
+    token,
+  };
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     dispatch(getUsers(token));
@@ -55,13 +65,18 @@ function TransSearch() {
       <Row className='min-vh-100 mw-100'>
           <NavbarDash/>
           <Col md={9} className='px-4 d-flex flex-column'>
-        <div className='d-flex flex-column gap-2' style={{background: '#B1D0E0', borderRadius: '20px'}}>
+        <Form onSubmit={async (event) => {
+              event.preventDefault();
+              await dispatch(getUsers(data));
+            }}
+              className='d-flex flex-column gap-2' 
+              style={{background: '#B1D0E0', borderRadius: '20px'}}>
             <div className="d-flex flex-column gap-3" style={{justifyContent: 'space-between', padding:'30px 25px'}} >
                 <div>
                   <p style={{fontSize: '18px', fontWeight: 'bold'}}>Search Reciver</p>
                 </div>
                 <div>
-                    <input class="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
+                    <input name='search' onChange={handleChangeText} class="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
                 borderRadius: '12px', border: 'unset', color: '#fff'}}/>
                 </div>  
             </div>
@@ -79,7 +94,7 @@ function TransSearch() {
                   )
               })}
             </div>
-        </div>
+        </Form>
         </Col>
       </Row>
     </section>
