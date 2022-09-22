@@ -73,7 +73,7 @@ const LoginForm = (props)=> {
   )
 }
 
-const Login = () => {
+function Login() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
