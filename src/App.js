@@ -3,7 +3,6 @@ import {Routes, Route} from 'react-router-dom'
 // import { BrowserRouter } from 'react-router-dom';
 
 // import ListCharacter from './pages/ListCharacter'
-import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import HomeLanding from './pages/HomeLanding'
@@ -37,7 +36,6 @@ function App() {
       <Routes>
         <Route path="header" element={<PrivateRoute><Header /></PrivateRoute>} />
         <Route path="navbardash" element={<NavbarDash />} />
-        <Route path="tes" element={<Home />} />
         <Route path="/" element={<HomeLanding />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} /> 
