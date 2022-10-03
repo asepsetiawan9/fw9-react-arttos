@@ -96,13 +96,20 @@ export const topup = createAsyncThunk('transaction/top-up', async request => {
   }
 });
 
-export const getUsers = createAsyncThunk('users/all-users', async (send) => {
+export const getUsers = createAsyncThunk('users/all-users', async ({token, search, limit, page}) => {
   const result = {};
+  console.log('ini limit', limit);
+  // limit = parseInt(limit) || 5
+  page  = parseInt(page) || 1
+  search = search || ''
   try {
-    const {data} = await http(send.token).get(`/users/getallusers?search=${send.search || ''}`);
+    const query = new URLSearchParams({token, search, limit, page}).toString()
+    const {data} = await http(token).get(`/users/getallusers?${query}`);
     console.log('ini dari actions dan ini datanya', data);
     return data;
-  } catch (e) {
+  } 
+  catch (e) {
+    console.log('masuk kesini');
     result.message = e.response.data?.message;
     return result;
   }

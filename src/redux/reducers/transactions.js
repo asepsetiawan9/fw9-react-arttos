@@ -7,6 +7,7 @@ import {getUsers} from '../asyncActions/transactions';
 
 const initialState = {
   data: {},
+  tabelInfo: {},
   dataLimit: {},
   dataRecipient: {},
   dataTransfer: {},
@@ -43,6 +44,7 @@ const transactions = createSlice({
     });
     build.addCase(getUsers.fulfilled, (state, action) => {
       state.totalData = action.payload.infoPage;
+      state.tabelInfo = action.payload.infoPage
       state.dataUser = action.payload;
     });
   },

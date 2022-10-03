@@ -36,11 +36,12 @@ function DataUsers( {id, phone, fullname, picture} ) {
 
 function TransSearch() {
   const token = useSelector((state) => state.auth.token);
-  const [search, setSearch] = useState({ search: '' });
-  const handleChangeText = (e) => {
-
-    setSearch({ ...search, [e.target.name]: e.target.value });
-  };
+  const allUsers = useSelector((state) => state.transactions?.dataUser);
+  const pageInfo = useSelector(state => state.transactions.tabelInfo);
+  console.log('ini page info', pageInfo);
+  const [search, setSearch] = React.useState('');
+  const [limit, setLimit] = React.useState(5);
+  const [page, setPage] = React.useState(1);
 
   const data = {
     search: search.search,
@@ -50,10 +51,16 @@ function TransSearch() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(getUsers(token));
-    }, []);
-
-  const allUsers = useSelector((state) => state.transactions?.dataUser);
+    dispatch(getUsers({token, search, limit, page}));
+    }, [search, limit, page]);
+  
+    const onNext = () => dispatch(
+      getUsers({token, limit: pageInfo.limit, page: pageInfo.nextPage})
+    )
+  
+    const onPrev = () => dispatch(
+      getUsers({token, limit: pageInfo.limit, page: pageInfo.prevPage})
+    )
 
   return (
     <>
@@ -75,8 +82,17 @@ function TransSearch() {
                 <div>
                   <p style={{fontSize: '18px', fontWeight: 'bold'}}>Search Reciver</p>
                 </div>
+                <div className="custom-select">
+                  <select name='limit' onChange={(e)=>{setLimit(e.target.value);}} style={{textAlign: 'center' ,alignItem: 'center', background: '#6998AB', borderRadius: '10px', width: '50px', height: '30px'}}>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5} selected>5</option>
+                  </select>
+                </div>
                 <div>
-                    <input name='search' onChange={handleChangeText} class="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
+                    <input onChange={(e)=>{setSearch(e.target.value);}} name='search' className="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
                 borderRadius: '12px', border: 'unset', color: '#fff'}}/>
                 </div>  
             </div>
@@ -94,7 +110,20 @@ function TransSearch() {
                   )
               })}
             </div>
+            <div className='d-flex flex-row gap-3' style={{paddingTop: '20px', justifyContent: 'center' ,alignItems: 'center'}}>
+              <button
+                // onClick={(e)=>{setPage({e.target.value, });}} 
+                onClick={onPrev} 
+                // disabled={pageInfo?.currPage<2} 
+                style={{background: 'blue', color: 'white', borderRadius: '10px'}}>Prev</button>
+              <div> {pageInfo?.currPage} </div>
+              <button 
+                onClick={onNext} 
+                // disabled={pageInfo?.nextPage<2} 
+                style={{background: 'blue', color: 'white', borderRadius: '10px'}}>Next</button>
+          </div>
         </Form>
+        
         </Col>
       </Row>
     </section>
