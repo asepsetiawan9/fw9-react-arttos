@@ -9,13 +9,15 @@ import {Formik} from 'formik'
 import { FiPhone } from "react-icons/fi";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateProfile } from '../redux/asyncActions/profile';
+import { updatePhone } from '../redux/asyncActions/profile';
+import { resetMsg } from "../redux/reducers/profile";
 
 const phoneSchema = Yup.object().shape({
   phone: Yup.string().matches(new RegExp('[0-9]{7}'))
 })
 
 const PhoneForm = (props)=>{
+
   return(
     <Form
     noValidate onSubmit={(props.handleSubmit)} className='d-flex flex-column gap-4 addPhone' >
@@ -42,19 +44,30 @@ const PhoneForm = (props)=>{
   )
 }
 
-
 function PhoneAdd() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
-  const msgEdit = useSelector((state) => state.profile.msgUpdate);
+  const successMsg = useSelector((state) => state.profile.successMsg);
+  const errMsg = useSelector((state) => state.profile.errorMsg);
   
   const onUpdatePhone = (value) => {
-    const data = { phone: value.phone};
-    dispatch(updateProfile({data, token}));
-    alert(msgEdit)
-    navigate('/profile');
+    const phoneForm = String('0' + value.phone)
+    const data = { phone: phoneForm};
+    dispatch(updatePhone({data, token}));
   };
+
+  React.useEffect(() => {
+    if (successMsg) {
+      alert(successMsg)
+      navigate("/profile", { state: { successMsg } });
+      setTimeout(()=> dispatch(resetMsg()), 3000)
+    }else{
+      alert(errMsg)
+      setTimeout(()=> dispatch(resetMsg()), 3000)
+    }
+  }, [navigate, successMsg]);
+
   return (
     <>
     <section className='headerDashboard'>

@@ -32,6 +32,28 @@ export const getProfile = createAsyncThunk('profile/getProfile', async (token)=>
       return result;
     }
   });
+
+  export const updatePhone = createAsyncThunk('profile/updatephone', async request => {
+    const result = {};
+    try {
+      const send = qs.stringify(request.data);
+      const {data} = await http(request.token).patch(
+        '/profile/updatephone',
+        send,
+        {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
+      // console.log('ini dari action', data);
+      return data;
+    } catch (e) {
+      result.errorMsg = e.response.data.message;
+      return result;
+    }
+  });
+
   export const updatePin = createAsyncThunk('profile/updatepin', async request => {
     const result = {};
     try {
