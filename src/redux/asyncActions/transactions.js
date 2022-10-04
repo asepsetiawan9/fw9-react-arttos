@@ -99,7 +99,7 @@ export const topup = createAsyncThunk('transaction/top-up', async request => {
 export const getUsers = createAsyncThunk('users/all-users', async ({token, search, limit, page}) => {
   const result = {};
   console.log('ini limit', limit);
-  // limit = parseInt(limit) || 5
+  limit = parseInt(limit) || 5
   page  = parseInt(page) || 1
   search = search || ''
   try {

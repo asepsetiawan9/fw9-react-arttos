@@ -25,7 +25,7 @@ function DataUsers( {id, phone, fullname, picture} ) {
       {picture? 
         <img style={{width:'50px', height: '50px'}} src={picture} alt={p1}/> :
         <img style={{width:'50px', height: '50px'}} src={p1} alt={p1}/>}
-          <div class="d-flex flex-column">
+          <div className="d-flex flex-column">
               <p style={{fontSize:'16px',  fontWeight: 'bold'}}>{fullname? fullname : 'User Name'}</p>
               <p style={{fontSize:'14px', marginTop: '-15px'}}>{phone? phone : 'Phone User'}</p>
           </div>
@@ -38,7 +38,7 @@ function TransSearch() {
   const token = useSelector((state) => state.auth.token);
   const allUsers = useSelector((state) => state.transactions?.dataUser);
   const pageInfo = useSelector(state => state.transactions.tabelInfo);
-  console.log('ini page info', pageInfo);
+  // console.log('ini page info', pageInfo);
   const [search, setSearch] = React.useState('');
   const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(1);
@@ -53,13 +53,17 @@ function TransSearch() {
   React.useEffect(() => {
     dispatch(getUsers({token, search, limit, page}));
     }, [search, limit, page]);
-  
+
+    const limitData = pageInfo.limit
+    const nextData = pageInfo.nextPage
+    
+  // console.log('ini page info limit', pageInfo.limit);
     const onNext = () => dispatch(
-      getUsers({token, limit: pageInfo.limit, page: pageInfo.nextPage})
+      getUsers({token, search, limit:limitData, page: nextData})
     )
   
     const onPrev = () => dispatch(
-      getUsers({token, limit: pageInfo.limit, page: pageInfo.prevPage})
+      getUsers({token, search, limit: pageInfo.limit, page: pageInfo.prevPage})
     )
 
   return (
@@ -110,17 +114,18 @@ function TransSearch() {
                   )
               })}
             </div>
-            <div className='d-flex flex-row gap-3' style={{paddingTop: '20px', justifyContent: 'center' ,alignItems: 'center'}}>
-              <button
-                // onClick={(e)=>{setPage({e.target.value, });}} 
+            <div className='d-flex flex-row gap-3' style={{paddingTop: '20px', justifyContent: 'center' ,alignItems: 'center', paddingBottom: '20px'}}>
+              <button 
                 onClick={onPrev} 
-                // disabled={pageInfo?.currPage<2} 
-                style={{background: 'blue', color: 'white', borderRadius: '10px'}}>Prev</button>
+                disabled={pageInfo?.currPage==null} 
+                className='regis'
+                >Prev</button>
               <div> {pageInfo?.currPage} </div>
               <button 
                 onClick={onNext} 
-                // disabled={pageInfo?.nextPage<2} 
-                style={{background: 'blue', color: 'white', borderRadius: '10px'}}>Next</button>
+                disabled={pageInfo?.nextPage==null} 
+                className='regis'
+                >Next</button>
           </div>
         </Form>
         
