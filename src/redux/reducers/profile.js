@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getProfile } from '../asyncActions/profile';
-import { updateProfile } from '../asyncActions/profile';
-import { updatePassword } from '../asyncActions/profile';
-import { updatePhone } from '../asyncActions/profile';
+import { updateProfile, updatePassword, updatePhone, editPic } from '../asyncActions/profile';
 
 const initialState ={
   data: {},
@@ -27,7 +25,8 @@ const profile = createSlice({
     });
     build.addCase(updateProfile.fulfilled, (state, action) => {
       state.dataUpdate = action.payload.result;
-      state.msgUpdate = action.payload.message;
+      state.errorMsg = action.payload.errorMsg;
+      state.successMsg = action.payload.message;
     });
     build.addCase(updatePhone.pending, (state) => {
       state.errorMsg = null;
@@ -35,7 +34,15 @@ const profile = createSlice({
     });
     build.addCase(updatePhone.fulfilled, (state, action) => {
       state.dataUpdate = action.payload.result;
-      console.log('ini dari reducer', action.payload.message);
+      state.errorMsg = action.payload.errorMsg;
+      state.successMsg = action.payload.message;
+    });
+    build.addCase(editPic.pending, (state) => {
+      state.errorMsg = null;
+      state.successMsg = null;
+    });
+    build.addCase(editPic.fulfilled, (state, action) => {
+      state.dataUpdate = action.payload.result;
       state.errorMsg = action.payload.errorMsg;
       state.successMsg = action.payload.message;
     });

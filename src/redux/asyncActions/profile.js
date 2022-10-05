@@ -33,6 +33,24 @@ export const getProfile = createAsyncThunk('profile/getProfile', async (token)=>
     }
   });
 
+  export const editPic = createAsyncThunk('updateprofile', async (request) => {
+    const result = {};
+    try {
+      var formData = new FormData();
+      formData.append('picture', request.picture);
+      const { data } = await http(request.token).patch(`profile/updateprofile`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return data;
+    } catch (e) {
+      
+      result.message = e.response.data?.message;
+      return result;
+    }
+  });
+
   export const updatePhone = createAsyncThunk('profile/updatephone', async request => {
     const result = {};
     try {
@@ -46,7 +64,6 @@ export const getProfile = createAsyncThunk('profile/getProfile', async (token)=>
           },
         },
       );
-      // console.log('ini dari action', data);
       return data;
     } catch (e) {
       result.errorMsg = e.response.data.message;
@@ -88,7 +105,7 @@ export const getProfile = createAsyncThunk('profile/getProfile', async (token)=>
           },
         },
       );
-      console.log('ini dari action', data)
+
       return data;
     } catch (e) {
       result.errorMsg = e.response.data.message;
