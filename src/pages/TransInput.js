@@ -63,14 +63,14 @@ const AmountForm = (props) => {
   )
 }
 
-function TransSearch() {
+function TransInpput() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const recipient_id = useSelector(state => state.transactions.dataTransfer);
   const recipient = useSelector(state => state.transactions.dataRecipient);
-  // console.log('recipientnya', recipient);
-  const today = new Date();
+  //  console.log('recipientnya', recipient_id);
+  // const today = new Date();
   var currentdate = new Date();
   var date =
     currentdate.getDate() +
@@ -112,10 +112,10 @@ function TransSearch() {
                 <div>
                   <p style={{fontSize: '18px', fontWeight: 'bold'}}>Transfer Money</p>
                 </div>
-                <div>
+                {/* <div>
                     <input className="form-control form-control-lg" type="text" placeholder="Search" aria-label=".form-control-lg example" style={{background: '#6998AB',
                 borderRadius: '12px', border: 'unset', color: '#fff'}}/>
-                </div>  
+                </div>   */}
             </div>
         <div className="wrapTrasn">
             <div className='cardSearchTrans'>
@@ -163,4 +163,4 @@ function TransSearch() {
   )
 }
 
-export default TransSearch
+export default TransInpput

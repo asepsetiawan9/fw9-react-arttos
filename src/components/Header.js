@@ -2,7 +2,7 @@ import React from 'react'
 import '../assets/css/dashstyle.css'
 import {Link, useNavigate} from 'react-router-dom'
 import user from '../assets/images/u3.png'
-import {Navbar, Dropdown, Button} from 'react-bootstrap'
+import {Navbar, Dropdown} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProfile } from '../redux/asyncActions/profile'
 import { logout } from "../redux/reducers/auth";
@@ -26,7 +26,7 @@ function Header() {
 
     React.useEffect(()=>{
         dispatch(getProfile(token))
-  },[])
+  },[dispatch, token])
 
   return (
     <>

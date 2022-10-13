@@ -3,7 +3,6 @@ import '../assets/css/dashstyle.css'
 import NavbarDash from '../components/NavbarDash'
 import Header from '../components/Header'
 import { Row, Col, Form} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +20,6 @@ const passNewSchema = Yup.object().shape({
   
   const PassNewForm = ({errors, handleSubmit, handleChange})=> {
     const style = { color: "#1A374D", fontSize: "1.5em" }
-    console.log(errors)
     return(
       <>
         <Form className='d-flex flex-column gap-3' noValidate onSubmit={handleSubmit}>

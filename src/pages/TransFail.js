@@ -12,7 +12,7 @@ import fail from '../assets/images/failed.png'
 //icon
 import { FiShare2 } from "react-icons/fi";
 
-function TransSuccess() {
+function TransFail() {
     const detailInput = useSelector(state => state.transactions.dataTransfer);
     const dataRecipient = useSelector(state => state.transactions.dataRecipient);
     const profile = useSelector((state) => state.profile.data);
@@ -33,7 +33,7 @@ function TransSuccess() {
 
                 <div className='d-flex flex-column gap-2 img-fluid' style={{padding: '60px 0px 10px 0px' , textAlign: 'center', alignItem: 'center'}}>
                     <div><img style={{width:'50px', height: '50px'}} src={fail} alt="success"/></div>
-                    <div><p> Transfer Success</p></div>
+                    <div><p> Transfer Fail</p></div>
                 </div>
 
                 <div className='cardSearchTrans'>
@@ -100,4 +100,4 @@ function TransSuccess() {
   )
 }
 
-export default TransSuccess
+export default TransFail

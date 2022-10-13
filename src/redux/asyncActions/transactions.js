@@ -40,8 +40,6 @@ export const getUserById = createAsyncThunk(
   async request => {
     const result = {};
     try {
-      // console.log('ini dari profile', request);
-      // const send = qs.stringify(request);
       const {data} = await http().get(`/users/getuserdetail/${request}`);
       return data;
     } catch (e) {

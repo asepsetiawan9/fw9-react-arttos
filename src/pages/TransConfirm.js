@@ -5,13 +5,11 @@ import Header from '../components/Header'
 import { Row, Col, Form} from 'react-bootstrap'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {transferMoney} from '../redux/asyncActions/transactions';
 //photo
 import p1 from '../assets/images/p1.png'
-import { FiThermometer } from 'react-icons/fi'
 import Footer from '../components/Footer'
 
 const ModalPin = () => {
@@ -20,6 +18,7 @@ const ModalPin = () => {
     const pinUser = useSelector(state => state.auth.pin);
     const token = useSelector((state) => state.auth.token);
     const detailInput = useSelector(state => state.transactions.dataTransfer);
+    console.log('ini detail', pinUser);
 
     const [form, setForm] = useState({ first: '', sec: '', third: '', fourth: '', fifth: '', sixth: '' });
     const date_time = `${detailInput.date} ${detailInput.time}`;
@@ -30,12 +29,12 @@ const ModalPin = () => {
     const handleChangeText = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
       };
+    
 
     const onInputPin = (value) => {
         const pin = Object.values(form).join('');
-        // console.log('ini pin input', pin, 'ini user', pinUser);
-         if (pin !== pinUser) {
-            console.log('trans fail');
+         if (pin === pinUser) {
+            console.log('trans Success');
             const data = {
                 amount: detailInput.amount,
                 recipient_id: detailInput.recipient_id,
@@ -102,7 +101,7 @@ const ModalPin = () => {
 
                 <div className="pin-form-wrap">
                     <input type="text" className="pin-form-input" 
-                    name="fiveth" 
+                    name="fifth" 
                     onChange={handleChangeText}
                     />
                 </div>
@@ -117,12 +116,12 @@ const ModalPin = () => {
             </Form>
             </Modal.Body>
             <Modal.Footer style={{borderTop: 'unset'}}>
-                <button 
+                <Button  type="submit"
                 // to={'/transsuccess'} 
                 onClick={onInputPin}
                 style={{padding: '10px 26px'}}  className='btn btn-fw9' >
                     Confrim
-                </button>
+                </Button>
             </Modal.Footer>
         </Modal>
         </>
